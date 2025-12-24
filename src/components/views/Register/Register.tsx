@@ -8,10 +8,10 @@ const Register = () => {
     const { visiblePassword, handleVisiblePassword } = useRegister()
 
     return (
-        <div className="flex w-full items-center justify-center gap-20 flex-row">
-            <div className="flex flex-col w-1/3 items-center justify-center gap-10">
+        <div className="flex w-full items-center justify-center gap-10 lg:gap-20 lg:flex-row flex-col">
+            <div className="flex flex-col w-full lg:w-1/3 items-center justify-center gap-10">
                 <Image src="../images/general/logo.svg" alt="Logo" width={180} height={180} />
-                <Image src="../images/illustration/login.svg" alt="Login" className="w-full" width={1024} height={1024} />
+                <Image src="../images/illustration/login.svg" alt="Login" className="w-2/3 lg:w-full" width={1024} height={1024} />
             </div>
             <Card>
                 <CardBody className="p-8">
@@ -26,18 +26,18 @@ const Register = () => {
                         <Input type={visiblePassword.password ? "text" : "password"} label="Password" variant="bordered" autoComplete="off" endContent={
                             <button type="button" className="focus:outline-none" onClick={() => handleVisiblePassword("password")}>
                                 {visiblePassword.password ? (
-                                    <FaEye className="text-xl text-default-400 cursor-pointer"/>
+                                    <FaEye className="text-xl text-default-400 cursor-pointer" />
                                 ) : (
-                                    <FaEyeSlash className="text-xl text-default-400 cursor-pointer"/>
+                                    <FaEyeSlash className="text-xl text-default-400 cursor-pointer" />
                                 )}
                             </button>
                         } />
                         <Input type={visiblePassword.passwordConfirmation ? "text" : "password"} label="Password Confirmation" variant="bordered" autoComplete="off" endContent={
                             <button type="button" className="focus:outline-none" onClick={() => handleVisiblePassword("passwordConfirmation")}>
                                 {visiblePassword.passwordConfirmation ? (
-                                    <FaEye className="text-xl text-default-400 cursor-pointer"/>
+                                    <FaEye className="text-xl text-default-400 cursor-pointer" />
                                 ) : (
-                                    <FaEyeSlash className="text-xl text-default-400 cursor-pointer"/>
+                                    <FaEyeSlash className="text-xl text-default-400 cursor-pointer" />
                                 )}
                             </button>
                         } />

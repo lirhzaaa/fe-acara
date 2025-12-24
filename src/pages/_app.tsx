@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <HeroUIProvider>
       <main className={cn(
         inter.className,
-        "flex min-h-screen min-w-full flex-col items-center justify-center gap-10"
+        "flex min-h-screen min-w-full flex-col items-center justify-center gap-10 py-10 lg:py-0"
       )}>
         <Component {...pageProps} />
       </main>
