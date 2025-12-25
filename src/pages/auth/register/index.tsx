@@ -1,9 +1,9 @@
 import AuthLayout from "@/components/layouts/AuthLayout";
-import Register from "@/components/views/Register";
+import Register from "@/components/views/Auth/Register";
 
 const RegisterPages = () => {
     return (
-        <AuthLayout title="ACARA | Register">
+        <AuthLayout title="Acara | Register">
             <Register />
         </AuthLayout>
     )
