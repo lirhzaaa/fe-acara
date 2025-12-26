@@ -4,6 +4,7 @@ import { useRouter } from "next/router"
 import { JSX } from "react"
 import { CiLogout } from "react-icons/ci"
 import { cn } from "@/utils/cn"
+import { signOut } from "next-auth/react"
 
 interface SidebarItems {
     key: string
@@ -20,7 +21,6 @@ interface PropsTypes {
 const DashboardLayoutSidebar = (props: PropsTypes) => {
     const { sidebarItems, isOpen } = props
     const router = useRouter()
-    const signOut = () => { }
     return (
         <div className={cn("fixed lg:relative z-50 h-screen w-full max-w-[300px] -translate-x-full lg:translate-x-0 flex flex-col justify-between border-r-1 border-default-200 bg-white px-4 py-6 transition-all",
             { "translate-x-0": isOpen }
@@ -32,7 +32,7 @@ const DashboardLayoutSidebar = (props: PropsTypes) => {
                 <Listbox items={sidebarItems} variant="solid" aria-label="Dashboard Menu">
                     {(item) => (
                         <ListboxItem key={item.key} className={cn("my-1 h-12 text-2xl", {
-                            "bg-danger-500 text-white": item.href === router.pathname
+                            "bg-danger-500 text-white": router.pathname.startsWith(item.href)
                         })}
                             startContent={item.icon}
                             textValue={item.label}
