@@ -16,7 +16,7 @@ interface PropTypes {
     onClearSearch: () => void
     onClickButtonTopContent: () => void
     renderCell: (item: Record<string, unknown>, columnKey: Key) => ReactNode
-    onChangeLimit: () => void
+    onChangeLimit: (e: ChangeEvent<HTMLSelectElement>) => void
     onChangePage: () => void
 }
 const DataTable = (props: PropTypes) => {
@@ -24,7 +24,7 @@ const DataTable = (props: PropTypes) => {
     const TopContent = useMemo(() => {
         return (
             <div className="flex flex-col-reverse items-start justify-between gap-y-4 lg:flex-row lg:items-center">
-                <Input isClearable className="w-full sm:max-w-[24%]" placeholder="Search by name" startContent={<CiSearch />} onChange={onChangeSearch} onClear={onClearSearch} />
+                <Input aria-label="Search category by name" isClearable className="w-full sm:max-w-[24%]" placeholder="Search by name" startContent={<CiSearch />} onChange={onChangeSearch} onClear={onClearSearch} />
                 <Button color="danger" onPress={onClickButtonTopContent}>Create Category</Button>
             </div>
         )
@@ -32,15 +32,17 @@ const DataTable = (props: PropTypes) => {
 
     const BottomContent = useMemo(() => {
         return (
-            <div className="flex items-center justify-center px-2 py-2 lg:justify-between">
-                <Select className="hidden max-w-36 lg:block" size="md" selectedKeys={[limit]} selectionMode="single" onChange={onChangeLimit} startContent={<p className="text-small">Show:</p>}>
+            <div className="flex items-center justify-center lg:justify-between">
+                <Select className="hidden max-w-36 lg:block" size="md" selectedKeys={[limit]} selectionMode="single" onChange={onChangeLimit} startContent={<p className="text-small">Show:</p>} disallowEmptySelection>
                     {LIMIT_LIST.map((item) => (
-                        <SelectItem key={item.value}>
+                        <SelectItem key={item.value} textValue={item.label}>
                             {item.label}
                         </SelectItem>
                     ))}
                 </Select>
-                <Pagination isCompact showControls color="danger" page={currentPage} total={totalPage} onChange={onChangePage} />
+                {totalPage > 1 && (
+                    <Pagination isCompact showControls color="danger" page={currentPage} total={totalPage} onChange={onChangePage} loop />
+                )}
             </div>
         )
     }, [limit, onChangeLimit, currentPage, totalPage, onChangePage])

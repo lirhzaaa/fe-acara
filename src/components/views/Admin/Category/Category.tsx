@@ -2,21 +2,27 @@ import DataTable from "@/components/ui/DataTable"
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@heroui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Key, ReactNode, useCallback } from "react"
+import { Key, ReactNode, useCallback, useEffect } from "react"
 import { CiMenuKebab } from "react-icons/ci";
 import { COLUMN_LISTS_CATEGORY } from "./Category.constants";
-import { LIMIT_LIST } from "@/constants/list.constatns";
+import useCategory from "./useCategory";
 
 const Category = () => {
-    const { push } = useRouter();
+    const { push, isReady, query } = useRouter();
+    const { setURL, dataCategory, isLoadingCategory, isRefetchingCategory, currentPage, currentLimit, handleChangeLimit, handleChangePage, handleSearch, handleClearSearch } = useCategory()
+    useEffect(() => {
+        if (isReady) {
+            setURL();
+        }
+    }, [isReady]);
     const renderCell = useCallback(
         (category: Record<string, unknown>, columnKey: Key) => {
             const cellValue = category[columnKey as keyof typeof category]
             switch (columnKey) {
-                case "icon":
-                    return (
-                        <Image src={`${cellValue}`} alt="icon" width={100} height={100} />
-                    )
+                // case "icon":
+                //     return (
+                //         <Image src={`${cellValue}`} alt="icon" width={100} height={100} />
+                //     )
                 case "actions":
                     return (
                         <Dropdown>
@@ -37,27 +43,23 @@ const Category = () => {
     )
     return (
         <section>
-            <DataTable
-                renderCell={renderCell}
-                columns={COLUMN_LISTS_CATEGORY}
-                currentPage={1}
-                data={[
-                    {
-                        _id: "123341",
-                        name: "Category v1",
-                        description: "Description category v1",
-                        icon: "/images/general/logo.svg"
-                    }
-                ]}
-                onChangeSearch={() => { }}
-                onClearSearch={() => { }}
-                onClickButtonTopContent={() => { }}
-                limit={LIMIT_LIST[0].label}
-                onChangeLimit={() => { }}
-                totalPage={8}
-                onChangePage={() => { }}
-                emptyContent="Category is empty"
-            />
+            {Object.keys(query).length > 0 && (
+                <DataTable
+                    renderCell={renderCell}
+                    columns={COLUMN_LISTS_CATEGORY}
+                    currentPage={Number(currentPage)}
+                    data={dataCategory?.data || []}
+                    isLoading={isLoadingCategory || isRefetchingCategory}
+                    onChangeSearch={handleSearch}
+                    onClearSearch={handleClearSearch}
+                    onClickButtonTopContent={() => { }}
+                    limit={String(currentLimit)}
+                    onChangeLimit={handleChangeLimit}
+                    totalPage={dataCategory?.pagination.totalPages}
+                    onChangePage={handleChangePage}
+                    emptyContent="Category is empty"
+                />
+            )}
         </section>
     )
 }
