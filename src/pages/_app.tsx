@@ -1,15 +1,10 @@
 import { HeroUIProvider } from "@heroui/react";
 import type { AppProps } from "next/app";
 import "../styles/globals.css";
-import { Inter } from "next/font/google"
-import { cn } from "@/utils/cn";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
+import AppShell from "@/components/commons/pageHead/AppShell";
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"]
-})
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,9 +20,9 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
         <HeroUIProvider>
-          <main className={cn(inter.className)}>
+          <AppShell>
             <Component {...pageProps} />
-          </main>
+          </AppShell>
         </HeroUIProvider>
       </QueryClientProvider>
     </SessionProvider>

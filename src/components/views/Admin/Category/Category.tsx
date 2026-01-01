@@ -1,5 +1,5 @@
 import DataTable from "@/components/ui/DataTable"
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@heroui/react";
+import { addToast, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@heroui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Key, ReactNode, useCallback, useEffect } from "react"
@@ -53,7 +53,14 @@ const Category = () => {
                     isLoading={isLoadingCategory || isRefetchingCategory}
                     onChangeSearch={handleSearch}
                     onClearSearch={handleClearSearch}
-                    onClickButtonTopContent={() => { }}
+                    onClickButtonTopContent={() => {
+                        addToast({
+                            title: "Text Notification",
+                            description: "This is for test notification",
+                            color: "success",
+                            
+                        })
+                    }}
                     limit={String(currentLimit)}
                     onChangeLimit={handleChangeLimit}
                     totalPage={dataCategory?.pagination.totalPages}
@@ -61,7 +68,7 @@ const Category = () => {
                     emptyContent="Category is empty"
                 />
             )}
-            <InputFile name="input" isDropable/>
+            <InputFile name="input" isDropable />
         </section>
     )
 }
