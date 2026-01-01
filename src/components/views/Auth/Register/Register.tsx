@@ -21,9 +21,6 @@ const Register = () => {
                     <p className="text-small">Have an account?&nbsp;
                         <Link href="/auth/login" className="font-semibold text-danger">Login here</Link>
                     </p>
-                    {errors.root && (
-                        <p className="font-medium my-2 text-danger">{errors?.root?.message}</p>
-                    )}
                     <form className={cn("flex w-80 flex-col mt-4", Object.keys(errors).length > 0 ? "gap-2" : "gap-4")} onSubmit={handleSubmit(handleRegister)}>
                         <Controller name="fullname" control={control} render={({ field }) => (
                             <Input {...field} type="text" label="Fullname" variant="bordered" autoComplete="off" isInvalid={errors.fullname !== undefined} errorMessage={errors.fullname?.message} />

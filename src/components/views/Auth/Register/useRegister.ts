@@ -6,6 +6,7 @@ import { IRegister } from "@/types/Auth";
 import authServices from "@/services/auth.service";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { addToast } from "@heroui/react";
 
 const registerSchema = yup.object().shape({
   fullname: yup.string().required("Please input your fullName"),
@@ -57,11 +58,21 @@ const useRegister = () => {
   const { mutate: mutateRegister, isPending: isPendingRegister } = useMutation({
     mutationFn: registerService,
     onError(error) {
+      addToast({
+        title: "Registration Failed",
+        description: "This email is already registered or the server is unreachable. Please try again or use a different email.",
+        color: "danger",
+      });
       setError("root", {
         message: error.message,
       });
     },
     onSuccess: () => {
+      addToast({
+        title: "Account Created!",
+        description: "Your registration was successful. You can now check your email for account activation.",
+        color: "success",
+      });
       router.push("/auth/register/success");
       reset();
     },
