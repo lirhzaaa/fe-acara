@@ -1,5 +1,5 @@
 import DataTable from "@/components/ui/DataTable"
-import { addToast, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@heroui/react";
+import { addToast, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, useDisclosure } from "@heroui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Key, ReactNode, useCallback, useEffect } from "react"
@@ -7,10 +7,14 @@ import { CiMenuKebab } from "react-icons/ci";
 import { COLUMN_LISTS_CATEGORY } from "./Category.constants";
 import useCategory from "./useCategory";
 import InputFile from "@/components/ui/InputFile";
+import AddCategory from "./AddCategory";
 
 const Category = () => {
     const { push, isReady, query } = useRouter();
-    const { setURL, dataCategory, isLoadingCategory, isRefetchingCategory, currentPage, currentLimit, handleChangeLimit, handleChangePage, handleSearch, handleClearSearch } = useCategory()
+    const { setURL, dataCategory, isLoadingCategory, isRefetchingCategory, currentPage, currentLimit, handleChangeLimit, handleChangePage, handleSearch, handleClearSearch, refetchCategory } = useCategory()
+
+    const addCategory = useDisclosure()
+
     useEffect(() => {
         if (isReady) {
             setURL();
@@ -53,14 +57,7 @@ const Category = () => {
                     isLoading={isLoadingCategory || isRefetchingCategory}
                     onChangeSearch={handleSearch}
                     onClearSearch={handleClearSearch}
-                    onClickButtonTopContent={() => {
-                        addToast({
-                            title: "Text Notification",
-                            description: "This is for test notification",
-                            color: "success",
-                            
-                        })
-                    }}
+                    onClickButtonTopContent={addCategory.onOpen}
                     limit={String(currentLimit)}
                     onChangeLimit={handleChangeLimit}
                     totalPage={dataCategory?.pagination.totalPages}
@@ -68,7 +65,8 @@ const Category = () => {
                     emptyContent="Category is empty"
                 />
             )}
-            <InputFile name="input" isDropable />
+
+            <AddCategory {...addCategory} refetchCategory={refetchCategory} />
         </section>
     )
 }
