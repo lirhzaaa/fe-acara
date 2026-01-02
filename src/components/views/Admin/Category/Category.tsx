@@ -1,4 +1,4 @@
-import DataTable from "@/components/ui/DataTable"
+import DataTable from "@/components/ui/DataTable/Category"
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, useDisclosure } from "@heroui/react";
 // import Image from "next/image";
 import { useRouter } from "next/router";
