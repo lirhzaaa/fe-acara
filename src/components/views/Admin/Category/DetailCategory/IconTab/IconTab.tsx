@@ -1,5 +1,5 @@
 import InputFile from "@/components/ui/InputFile"
-import { Card, CardBody, CardFooter, CardHeader, Skeleton } from "@heroui/react"
+import { Button, Card, CardBody, CardHeader, Skeleton } from "@heroui/react"
 import Image from "next/image"
 
 interface IIconTypes {
@@ -16,12 +16,16 @@ const IconTab = (props: IIconTypes) => {
             </CardHeader>
             <CardBody>
                 <form className="flex flex-col gap-4" onSubmit={() => { }}>
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-  ">
                         <p className="text-sm font-medium text-default-700">Current Icon</p>
                         <Skeleton isLoaded={!!currentIcon} className="aspect-square rounded-lg">
-                            <Image src={currentIcon} alt="Image icon for category" fill className="relative!"/>
+                            <Image src={currentIcon} alt="Image icon for category" fill className="relative!" />
                         </Skeleton>
                     </div>
+                    <InputFile name="icon" label="Upload New Icon" onUpload={() => { }} isDropable />
+                    <Button color="danger" className="disabled:bg-default-500 mt-2" disabled>
+                        Save Changes
+                    </Button>
                 </form>
             </CardBody>
         </Card>

@@ -6,6 +6,7 @@ import { CiSaveUp2, CiTrash } from "react-icons/ci"
 
 interface IInputFile {
     name: string
+    label?: string
     className?: string
     isDropable?: boolean
     isInvalid?: boolean
@@ -18,7 +19,7 @@ interface IInputFile {
 }
 
 const InputFile = (props: IInputFile) => {
-    const { name, className, isDropable = false, isInvalid, errorMessage, onUpload, onDelete, isUploading, isDeleting, preview } = props
+    const { name, label, className, isDropable = false, isInvalid, errorMessage, onUpload, onDelete, isUploading, isDeleting, preview } = props
     const drop = useRef<HTMLLabelElement>(null)
     const dropzoneId = useId()
     const handleDragOver = (e: DragEvent) => {
@@ -56,7 +57,8 @@ const InputFile = (props: IInputFile) => {
     }
 
     return (
-        <div>
+        <div className="flex flex-col gap-2">
+            <p className="text-sm font-medium text-default-700">{label}</p>
             <label htmlFor={`dropzone-file-${dropzoneId}`} ref={drop} className={cn(
                 "flex min-h-24 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100",
                 className,
