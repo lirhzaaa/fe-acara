@@ -8,6 +8,7 @@ import { COLUMN_LISTS_CATEGORY } from "./Category.constants";
 import useCategory from "./useCategory";
 import AddCategory from "./AddCategory";
 import DeleteCategory from "./DeleteCategory";
+import Image from "next/image";
 
 const Category = (  ) => {
     const { push, isReady, query } = useRouter();
@@ -26,10 +27,10 @@ const Category = (  ) => {
         (category: Record<string, unknown>, columnKey: Key) => {
             const cellValue = category[columnKey as keyof typeof category]
             switch (columnKey) {
-                // case "icon":
-                //     return (
-                //         <Image src={`${cellValue}`} alt="icon" width={100} height={100} />
-                //     )
+                case "icon":
+                    return (
+                        <Image src={`${cellValue}`} alt="icon" width={100} height={100} />
+                    )
                 case "actions":
                     return (
                         <Dropdown>
