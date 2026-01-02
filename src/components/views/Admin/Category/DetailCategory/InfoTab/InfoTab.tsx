@@ -1,5 +1,6 @@
 import { ICategory } from "@/types/Category"
 import { Button, Card, CardBody, CardHeader, Input, Skeleton, Textarea } from "@heroui/react"
+import useInfoTab from "./useInfoTab"
 
 interface IDataCategory {
     dataCategory: ICategory
@@ -7,6 +8,12 @@ interface IDataCategory {
 
 const InfoTab = (props: IDataCategory) => {
     const { dataCategory } = props
+    const {
+        controlUpdateInformation,
+        handleSubmitUpdateInformation,
+        errorsUpdateInformation,
+        setValueUpdateInformation,
+    } = useInfoTab()
     return (
         <Card className="w-full lg:w-1/2 p-4">
             <CardHeader className="flex flex-col lg:items-start gap-1">
