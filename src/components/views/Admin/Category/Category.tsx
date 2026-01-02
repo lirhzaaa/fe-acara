@@ -7,19 +7,21 @@ import { CiMenuKebab } from "react-icons/ci";
 import { COLUMN_LISTS_CATEGORY } from "./Category.constants";
 import useCategory from "./useCategory";
 import AddCategory from "./AddCategory";
+import DeleteCategory from "./DeleteCategory";
 
-const Category = () => {
+const Category = (  ) => {
     const { push, isReady, query } = useRouter();
-    const { setURL, dataCategory, isLoadingCategory, isRefetchingCategory, currentPage, currentLimit, handleChangeLimit, handleChangePage, handleSearch, handleClearSearch, refetchCategory } = useCategory()
+    const { setURL, dataCategory, isLoadingCategory, isRefetchingCategory, currentPage, currentLimit, handleChangeLimit, handleChangePage, handleSearch, handleClearSearch, refetchCategory, selectedId, setSelectedId } = useCategory()
 
     const addCategory = useDisclosure()
+    const deleteCategory = useDisclosure()
 
     useEffect(() => {
         if (isReady) {
             setURL();
         }
     }, []);
-    
+
     const renderCell = useCallback(
         (category: Record<string, unknown>, columnKey: Key) => {
             const cellValue = category[columnKey as keyof typeof category]
@@ -37,14 +39,17 @@ const Category = () => {
                             <DropdownMenu aria-label="Dropdown Actions">
                                 <DropdownItem key="detail" onPress={() => push(`/admin/category/detail${category._id}`)}>Detail</DropdownItem>
                                 <DropdownItem key="edit" onPress={() => push(`/admin/category/edit${category._id}`)} className="text-primary-500">Edit</DropdownItem>
-                                <DropdownItem key="delete" onPress={() => push(`/admin/category/delete${category._id}`)} className="text-danger-500">Delete</DropdownItem>
+                                <DropdownItem key="delete" onPress={() => {
+                                    setSelectedId(`${category._id}`);
+                                    deleteCategory.onOpen()
+                                }} className="text-danger-500">Delete</DropdownItem>
                             </DropdownMenu>
-                        </Dropdown>
+                        </Dropdown >
                     )
                 default:
                     return cellValue as ReactNode;
             }
-        }, [push]
+        }, [push, setSelectedId, deleteCategory]
     )
     return (
         <section>
@@ -66,7 +71,14 @@ const Category = () => {
                 />
             )}
 
-            <AddCategory {...addCategory} refetchCategory={refetchCategory} />
+            <AddCategory
+                {...addCategory}
+                refetchCategory={refetchCategory} />
+            <DeleteCategory
+                {...deleteCategory}
+                selectedId={selectedId}
+                setSelectedId={setSelectedId}
+                refetchCategory={refetchCategory} />
         </section>
     )
 }
