@@ -17,7 +17,7 @@ interface PropTypes {
     onClickButtonTopContent: () => void
     renderCell: (item: Record<string, unknown>, columnKey: Key) => ReactNode
     onChangeLimit: (e: ChangeEvent<HTMLSelectElement>) => void
-    onChangePage: () => void
+    onChangePage: (page: number) => void
 }
 const DataTable = (props: PropTypes) => {
     const { columns, data, renderCell, onChangeSearch, onClearSearch, onClickButtonTopContent, limit, onChangeLimit, currentPage, totalPage, onChangePage, emptyContent, isLoading } = props
