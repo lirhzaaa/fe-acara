@@ -7,7 +7,6 @@ const schemaUpdateInformation = Yup.object().shape({
     description: Yup.string().required("Please input description")
 })
 
-
 const useInfoTab = () => {
     const {
         control: controlUpdateInformation,

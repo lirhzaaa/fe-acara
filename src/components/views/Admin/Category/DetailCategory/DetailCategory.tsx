@@ -13,10 +13,18 @@ const DetailCategory = () => {
     return (
         <Tabs aria-label="Options Detail Category">
             <Tab key="icon" title="Icon">
-                <IconTab currentIcon={dataCategory?.icon} onUpdate={handleUpdateCategory} isPendingUpdateCategory={isPendingMutateUpdateCategory} isSuccessUpdateCategory={isSuccessMutateUpdateCategory} />
+                <IconTab
+                    currentIcon={dataCategory?.icon}
+                    onUpdate={handleUpdateCategory}
+                    isPendingUpdateCategory={isPendingMutateUpdateCategory}
+                    isSuccessUpdateCategory={isSuccessMutateUpdateCategory} />
             </Tab>
             <Tab key="info" title="Info">
-                <InfoTab dataCategory={dataCategory} />
+                <InfoTab
+                    dataCategory={dataCategory}
+                    onUpdate={handleUpdateCategory}
+                    isPendingUpdateCategory={isPendingMutateUpdateCategory}
+                    isSuccessUpdateCategory={isSuccessMutateUpdateCategory} />
             </Tab>
         </Tabs>
     )
