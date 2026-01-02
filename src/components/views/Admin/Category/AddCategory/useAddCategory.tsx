@@ -7,6 +7,12 @@ import { useMutation } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import * as Yup from "yup"
 
+type CategoryForm = {
+    name: string
+    description: string
+    icon: string | FileList
+}
+
 const schema = Yup.object().shape({
     name: Yup.string().required("Please input name"),
     description: Yup.string().required("Please input description"),
@@ -23,7 +29,7 @@ const useAddCategory = () => {
 
     const {
         control, handleSubmit: handleSubmitForm, formState: { errors }, reset, watch, getValues, setValue
-    } = useForm<ICategory>({
+    } = useForm<CategoryForm>({
         resolver: yupResolver(schema),
         defaultValues: {
             name: "",
