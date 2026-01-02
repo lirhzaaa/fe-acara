@@ -2,11 +2,7 @@ interface ICategory {
   _id?: string;
   name: string;
   description: string;
-  icon: string;
+  icon?: string | FileList;
 }
 
-interface ICategoryForm extends Omit<ICategory, "icon"> {
-  icon: FileList;
-}
-
-export { ICategory, ICategoryForm };
+export { ICategory };

@@ -1,20 +1,24 @@
 import { cn } from "@/utils/cn"
+import { Button, Spinner } from "@heroui/react"
 import Image from "next/image"
 import { ChangeEvent, useEffect, useId, useRef, useState } from "react"
-import { CiSaveUp2 } from "react-icons/ci"
+import { CiSaveUp2, CiTrash } from "react-icons/ci"
 
 interface IInputFile {
     name: string
     className?: string
     isDropable?: boolean
-    onChange?: (e: ChangeEvent<HTMLInputElement>) => void
     isInvalid?: boolean
+    isUploading?: boolean
+    isDeleting?: boolean
+    onUpload?: (files: FileList) => void
+    onDelete?: () => void
+    preview?: string
     errorMessage?: string
 }
 
 const InputFile = (props: IInputFile) => {
-    const { name, className, isDropable = false, onChange, isInvalid, errorMessage } = props
-    const [uploadImage, setUploadImage] = useState<File | null>(null)
+    const { name, className, isDropable = false, isInvalid, errorMessage, onUpload, onDelete, isUploading, isDeleting, preview } = props
     const drop = useRef<HTMLLabelElement>(null)
     const dropzoneId = useId()
     const handleDragOver = (e: DragEvent) => {
@@ -26,7 +30,10 @@ const InputFile = (props: IInputFile) => {
 
     const handleDrop = (e: DragEvent) => {
         e.preventDefault()
-        setUploadImage(e.dataTransfer?.files?.[0] || null)
+        const files = e.dataTransfer?.files
+        if (files && onUpload) {
+            onUpload(files)
+        }
     }
 
     useEffect(() => {
@@ -41,13 +48,10 @@ const InputFile = (props: IInputFile) => {
         }
     }, [])
 
-    const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleOnUpload = (e: ChangeEvent<HTMLInputElement>) => {
         const files = e.currentTarget.files
-        if (files && files.length > 0) {
-            setUploadImage(files[0])
-            if (onChange) {
-                onChange(e)
-            }
+        if (files && onUpload) {
+            onUpload(files)
         }
     }
 
@@ -58,16 +62,23 @@ const InputFile = (props: IInputFile) => {
                 className,
                 { "border-danger-500": isInvalid }
             )}>
-                {uploadImage ? (
-                    <div className="flex flex-col items-center justify-center p-5">
+
+                {preview && (
+                    <div className="relative flex flex-col items-center justify-center p-5">
                         <div className="mb-2 w-1/2">
-                            <Image fill src={URL.createObjectURL(uploadImage)} alt="Image" className="relative!" />
+                            <Image fill src={preview} alt="Image" className="relative!" />
                         </div>
-                        <p className="text-center text-sm font-semibold text-gray-500">
-                            {uploadImage.name}
-                        </p>
+                        <Button isIconOnly onPress={onDelete} disabled={isDeleting} className="absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded bg-danger-100">
+                            {isDeleting ? (
+                                <Spinner size="sm" color="danger" />
+                            ) : (
+                                <CiTrash className="h-5 w-5 text-danger-500" />
+                            )}
+                        </Button>
                     </div>
-                ) : (
+                )}
+
+                {!preview && !isUploading && (
                     <div className="flex flex-col items-center justify-center p-5">
                         <div className="mb-2">
                             <CiSaveUp2 className="mb-2 h-10 w-10 text-gray-400" />
@@ -77,7 +88,15 @@ const InputFile = (props: IInputFile) => {
                         </p>
                     </div>
                 )}
-                <input type="file" className="hidden" accept="image/*" id={`dropzone-file-${dropzoneId}`} name={name} onChange={handleOnChange} />
+                {isUploading && (
+                    <div className="flex flex-col items-center justify-center p-5">
+                        <Spinner color="danger" />
+                    </div>
+                )}
+                <input type="file" className="hidden" accept="image/*" id={`dropzone-file-${dropzoneId}`} name={name} onChange={handleOnUpload} disabled={preview !== ""} onClick={(e) => {
+                    e.currentTarget.value = ""
+                    e.target.dispatchEvent(new Event("change", { bubbles: true }))
+                }} />
             </label>
             {isInvalid && (
                 <p className="p-1 text-xs text-danger-500">{errorMessage}</p>

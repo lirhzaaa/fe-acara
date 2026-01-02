@@ -1,12 +1,11 @@
 import DataTable from "@/components/ui/DataTable"
-import { addToast, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, useDisclosure } from "@heroui/react";
-import Image from "next/image";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, useDisclosure } from "@heroui/react";
+// import Image from "next/image";
 import { useRouter } from "next/router";
 import { Key, ReactNode, useCallback, useEffect } from "react"
 import { CiMenuKebab } from "react-icons/ci";
 import { COLUMN_LISTS_CATEGORY } from "./Category.constants";
 import useCategory from "./useCategory";
-import InputFile from "@/components/ui/InputFile";
 import AddCategory from "./AddCategory";
 
 const Category = () => {
@@ -19,7 +18,8 @@ const Category = () => {
         if (isReady) {
             setURL();
         }
-    }, [isReady]);
+    }, []);
+    
     const renderCell = useCallback(
         (category: Record<string, unknown>, columnKey: Key) => {
             const cellValue = category[columnKey as keyof typeof category]
