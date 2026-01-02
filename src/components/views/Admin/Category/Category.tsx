@@ -38,8 +38,7 @@ const Category = (  ) => {
                                 <Button isIconOnly size="sm" variant="bordered"><CiMenuKebab className="text-default-700" /></Button>
                             </DropdownTrigger>
                             <DropdownMenu aria-label="Dropdown Actions">
-                                <DropdownItem key="detail" onPress={() => push(`/admin/category/detail${category._id}`)}>Detail</DropdownItem>
-                                <DropdownItem key="edit" onPress={() => push(`/admin/category/edit${category._id}`)} className="text-primary-500">Edit</DropdownItem>
+                                <DropdownItem key="detail" onPress={() => push(`/admin/category/${category._id}`)}>Detail</DropdownItem>
                                 <DropdownItem key="delete" onPress={() => {
                                     setSelectedId(`${category._id}`);
                                     deleteCategory.onOpen()

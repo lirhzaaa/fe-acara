@@ -3,11 +3,14 @@ import endpoint from "./endpoint.constant";
 import { ICategory } from "@/types/Category";
 
 const categoryServices = {
-  getCategories: (params?: string) =>
-    instance.get(`${endpoint.CATEGORY}?${params}`),
   addCategories: (payload: ICategory) => {
     instance.post(`/create${endpoint.CATEGORY}`, payload);
   },
+  getCategories: (params?: string) =>
+    instance.get(`${endpoint.CATEGORY}?${params}`),
+  getCategoriesById: (id: string) => instance.get(`${endpoint.CATEGORY}/${id}`),
+  updateCategories: (id: string, payload: ICategory) =>
+    instance.put(`update${endpoint.CATEGORY}/${id}`, payload),
   deleteCategories: (id: string) =>
     instance.delete(`/delete${endpoint.CATEGORY}/${id}`),
 };
