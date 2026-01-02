@@ -11,7 +11,7 @@ const IconTab = (props: IIconTypes) => {
     return (
         <Card className="w-full lg:w-1/2 p-4">
             <CardHeader className="flex flex-col lg:items-start gap-1">
-                <h1 className="text-xl font-bold">Category Icon</h1>
+                <h3 className="text-xl font-bold">Category Icon</h3>
                 <p className="w-full text-small text-default-400">Manage icon of this category</p>
             </CardHeader>
             <CardBody>
@@ -23,7 +23,7 @@ const IconTab = (props: IIconTypes) => {
                         </Skeleton>
                     </div>
                     <InputFile name="icon" label="Upload New Icon" onUpload={() => { }} isDropable />
-                    <Button color="danger" className="disabled:bg-default-500 mt-2" disabled>
+                    <Button color="danger" type="submit" className="disabled:bg-default-500 mt-2" disabled>
                         Save Changes
                     </Button>
                 </form>
