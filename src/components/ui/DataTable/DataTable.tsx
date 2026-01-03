@@ -1,39 +1,51 @@
 import { LIMIT_LIST } from "@/constants/list.constatns"
+import useChangeUrl from "@/hooks/useChangeUrl"
 import { cn } from "@/utils/cn"
 import { Button, Input, Pagination, Select, SelectItem, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react"
-import { ChangeEvent, Key, ReactNode, useMemo } from "react"
+import { Key, ReactNode, useMemo } from "react"
 import { CiSearch } from "react-icons/ci"
 
 interface PropTypes {
     columns: Record<string, unknown>[]
     data: Record<string, unknown>[]
-    limit: string
     emptyContent: string
-    currentPage: number
     totalPage: number
     isLoading?: boolean
-    onChangeSearch: (e: ChangeEvent<HTMLInputElement>) => void
-    onClearSearch: () => void
     onClickButtonTopContent: () => void
     renderCell: (item: Record<string, unknown>, columnKey: Key) => ReactNode
-    onChangeLimit: (e: ChangeEvent<HTMLSelectElement>) => void
-    onChangePage: (page: number) => void
 }
 const DataTable = (props: PropTypes) => {
-    const { columns, data, renderCell, onChangeSearch, onClearSearch, onClickButtonTopContent, limit, onChangeLimit, currentPage, totalPage, onChangePage, emptyContent, isLoading } = props
+    const {
+        columns,
+        data,
+        renderCell,
+        onClickButtonTopContent,
+        totalPage,
+        emptyContent,
+        isLoading } = props
+
+    const {
+        currentLimit,
+        currentPage,
+        handleChangeLimit,
+        handleChangePage,
+        handleSearch,
+        handleClearSearch,
+    } = useChangeUrl()
+
     const TopContent = useMemo(() => {
         return (
             <div className="flex flex-col-reverse items-start justify-between gap-y-4 lg:flex-row lg:items-center">
-                <Input aria-label="Search category by name" isClearable className="w-full sm:max-w-[24%]" placeholder="Search by name" startContent={<CiSearch />} onChange={onChangeSearch} onClear={onClearSearch} />
+                <Input aria-label="Search by name" isClearable className="w-full sm:max-w-[24%]" placeholder="Search by name" startContent={<CiSearch />} onChange={handleSearch} onClear={handleClearSearch} />
                 <Button color="danger" onPress={onClickButtonTopContent}>Create Category</Button>
             </div>
         )
-    }, [onChangeSearch, onClearSearch, onClickButtonTopContent])
+    }, [handleSearch, handleClearSearch, onClickButtonTopContent])
 
     const BottomContent = useMemo(() => {
         return (
             <div className="flex items-center justify-center lg:justify-between">
-                <Select className="hidden max-w-36 lg:block" size="md" selectedKeys={[limit]} selectionMode="single" onChange={onChangeLimit} startContent={<p className="text-small">Show:</p>} disallowEmptySelection>
+                <Select className="hidden max-w-36 lg:block" size="md" selectedKeys={[`${currentLimit}`]} selectionMode="single" onChange={handleChangeLimit} startContent={<p className="text-small">Show:</p>} disallowEmptySelection>
                     {LIMIT_LIST.map((item) => (
                         <SelectItem key={item.value} textValue={item.label}>
                             {item.label}
@@ -41,11 +53,11 @@ const DataTable = (props: PropTypes) => {
                     ))}
                 </Select>
                 {totalPage > 1 && (
-                    <Pagination isCompact showControls color="danger" page={currentPage} total={totalPage} onChange={onChangePage} loop />
+                    <Pagination isCompact showControls color="danger" page={Number(currentPage)} total={totalPage} onChange={handleChangePage} loop />
                 )}
             </div>
         )
-    }, [limit, onChangeLimit, currentPage, totalPage, onChangePage])
+    }, [currentLimit, handleChangeLimit, currentPage, totalPage, handleChangePage])
 
     return (
         <Table topContent={TopContent} topContentPlacement="outside" bottomContent={BottomContent} bottomContentPlacement="outside" classNames={{

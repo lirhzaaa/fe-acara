@@ -1,6 +1,5 @@
-import DataTable from "@/components/ui/DataTable/Category"
+import DataTable from "@/components/ui/DataTable/DataTable"
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, useDisclosure } from "@heroui/react";
-// import Image from "next/image";
 import { useRouter } from "next/router";
 import { Key, ReactNode, useCallback, useEffect } from "react"
 import { CiMenuKebab } from "react-icons/ci";
@@ -9,19 +8,27 @@ import useCategory from "./useCategory";
 import AddCategory from "./AddCategory";
 import DeleteCategory from "./DeleteCategory";
 import Image from "next/image";
+import useChangeUrl from "@/hooks/useChangeUrl";
 
-const Category = (  ) => {
+const Category = () => {
     const { push, isReady, query } = useRouter();
-    const { setURL, dataCategory, isLoadingCategory, isRefetchingCategory, currentPage, currentLimit, handleChangeLimit, handleChangePage, handleSearch, handleClearSearch, refetchCategory, selectedId, setSelectedId } = useCategory()
+    const {
+        dataCategory,
+        isLoadingCategory,
+        isRefetchingCategory,
+        refetchCategory,
+        selectedId,
+        setSelectedId } = useCategory()
 
     const addCategory = useDisclosure()
     const deleteCategory = useDisclosure()
+    const { setURL } = useChangeUrl()
 
     useEffect(() => {
         if (isReady) {
             setURL();
         }
-    }, []);
+    }, [isReady]);
 
     const renderCell = useCallback(
         (category: Record<string, unknown>, columnKey: Key) => {
@@ -57,16 +64,10 @@ const Category = (  ) => {
                 <DataTable
                     renderCell={renderCell}
                     columns={COLUMN_LISTS_CATEGORY}
-                    currentPage={Number(currentPage)}
                     data={dataCategory?.data || []}
                     isLoading={isLoadingCategory || isRefetchingCategory}
-                    onChangeSearch={handleSearch}
-                    onClearSearch={handleClearSearch}
                     onClickButtonTopContent={addCategory.onOpen}
-                    limit={String(currentLimit)}
-                    onChangeLimit={handleChangeLimit}
                     totalPage={dataCategory?.pagination.totalPages}
-                    onChangePage={handleChangePage}
                     emptyContent="Category is empty"
                 />
             )}
