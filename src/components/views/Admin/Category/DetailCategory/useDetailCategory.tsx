@@ -36,7 +36,7 @@ const useDetailCategory = () => {
     }
 
     const { data: dataCategory, refetch: refetchCategory } = useQuery({
-        queryKey: ["Category"],
+        queryKey: ["Categories"],
         queryFn: () => getCategoryById(`${query.id}`),
         enabled: isReady
     })

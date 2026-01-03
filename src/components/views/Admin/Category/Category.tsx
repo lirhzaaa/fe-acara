@@ -62,6 +62,7 @@ const Category = () => {
         <section>
             {Object.keys(query).length > 0 && (
                 <DataTable
+                    buttonTopContent="Create Category"
                     renderCell={renderCell}
                     columns={COLUMN_LISTS_CATEGORY}
                     data={dataCategory?.data || []}

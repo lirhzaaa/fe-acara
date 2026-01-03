@@ -3,7 +3,7 @@ const COLUMN_LIST_EVENT = [
     { name: "Name", uid: "name" },
     { name: "Start Date", uid: "startDate" },
     { name: "End Date", uid: "endDate" },
-    { name: "Status", uid: "status" },
+    { name: "Status", uid: "isPublish" },
     { name: "Actions", uid: "actions" },
 ]
 

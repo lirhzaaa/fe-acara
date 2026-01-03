@@ -6,6 +6,7 @@ import { Key, ReactNode, useMemo } from "react"
 import { CiSearch } from "react-icons/ci"
 
 interface PropTypes {
+    buttonTopContent: string
     columns: Record<string, unknown>[]
     data: Record<string, unknown>[]
     emptyContent: string
@@ -16,6 +17,7 @@ interface PropTypes {
 }
 const DataTable = (props: PropTypes) => {
     const {
+        buttonTopContent,
         columns,
         data,
         renderCell,
@@ -37,10 +39,10 @@ const DataTable = (props: PropTypes) => {
         return (
             <div className="flex flex-col-reverse items-start justify-between gap-y-4 lg:flex-row lg:items-center">
                 <Input aria-label="Search by name" isClearable className="w-full sm:max-w-[24%]" placeholder="Search by name" startContent={<CiSearch />} onChange={handleSearch} onClear={handleClearSearch} />
-                <Button color="danger" onPress={onClickButtonTopContent}>Create Category</Button>
+                <Button color="danger" onPress={onClickButtonTopContent}>{buttonTopContent}</Button>
             </div>
         )
-    }, [handleSearch, handleClearSearch, onClickButtonTopContent])
+    }, [handleSearch, handleClearSearch, onClickButtonTopContent, buttonTopContent])
 
     const BottomContent = useMemo(() => {
         return (
