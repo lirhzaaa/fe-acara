@@ -81,10 +81,10 @@ const Event = () => {
             )}
 
 
-            {/* 
+
             <AddEvent
                 {...addEvent}
-                refetchEvent={refetchEvent} /> */}
+                refetchEvent={refetchEvent} />
             {/* <DeleteEvent
                 {...deleteCategory}
                 selectedId={selectedId}
