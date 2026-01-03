@@ -1,7 +1,7 @@
 import DataTable from "@/components/ui/DataTable/DataTable"
 import { Key, ReactNode, useCallback, useEffect } from "react"
 // import Image from "next/image"
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, useDisclosure } from "@heroui/react"
+import { Button, Chip, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, useDisclosure } from "@heroui/react"
 import { CiMenuKebab } from "react-icons/ci"
 import { useRouter } from "next/router"
 import useEvent from "./useEvent"
@@ -39,7 +39,7 @@ const Event = () => {
             switch (columnKey) {
                 case "banner":
                     return (
-                        <Image src={`${cellValue}`} alt="icon" width={100} height={100} className="aspect-video object-cover rounded-lg" />
+                        <Image src={`${cellValue}`} alt="icon" width={100} height={100} className="rounded-lg" />
                     )
                 case "actions":
                     return (
@@ -52,6 +52,12 @@ const Event = () => {
                                 deleteEvent.onOpen()
                             }}
                         />
+                    )
+                case "isPublish":
+                    return (
+                        <Chip color={cellValue ? "success" : "warning"} size="sm" variant="flat">
+                            {cellValue === true ? "Published" : "Not Published"}
+                        </Chip>
                     )
                 default:
                     return cellValue as ReactNode
