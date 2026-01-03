@@ -12,7 +12,7 @@ const eventServices = {
   updateEvents: (id: string, payload: IEvent) =>
     instance.put(`update${endpoint.EVENT}/${id}`, payload),
   deleteEvents: (id: string) =>
-    instance.delete(`/delete${endpoint.EVENT}/${id}`),
+    instance.delete(`${endpoint.EVENT}/${id}`),
   searchLocationByRegency: (name: string) => instance.get(`${endpoint.REGION}-search?name=${name}`)
 };
 

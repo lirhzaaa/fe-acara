@@ -8,6 +8,7 @@ import { COLUMN_LIST_EVENT } from "./Event.constants"
 import Image from "next/image"
 import AddEvent from "./AddEvent"
 import DropdownAction from "@/components/commons/DropdownAction"
+import DeleteEvent from "./DeleteEvent"
 
 const Event = () => {
     const { push, isReady, query } = useRouter()
@@ -81,11 +82,12 @@ const Event = () => {
             <AddEvent
                 {...addEvent}
                 refetchEvent={refetchEvent} />
-            {/* <DeleteEvent
-                {...deleteCategory}
+            <DeleteEvent
+                {...deleteEvent}
                 selectedId={selectedId}
                 setSelectedId={setSelectedId}
-                refetchCategory={refetchCategory} /> */}
+                refetchEvent={refetchEvent}
+            />
         </section>
     )
 }
