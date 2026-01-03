@@ -3,15 +3,17 @@ import useDebounce from "@/hooks/useDebounce"
 import useMediaHandling from "@/hooks/useMediaHandling"
 import categoryServices from "@/services/category.service"
 import eventServices from "@/services/event.service"
-import { IEvent, IEventForm } from "@/types/Event"
+import { IEvent } from "@/types/Event"
 import { toDateStandard } from "@/utils/date"
 import { addToast, DateValue } from "@heroui/react"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { getLocalTimeZone, now, toTimeZone } from "@internationalized/date"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import * as Yup from "yup"
+type AddEventFormValues = Yup.InferType<typeof schema>;
 
 const schema = Yup.object().shape({
     name: Yup.string().required("Please input name"),
@@ -49,6 +51,9 @@ const useAddEvent = () => {
 
     const preview = watch("banner")
     const fileUrl = getValues("banner")
+
+    setValue("startDate", now(getLocalTimeZone()))
+    setValue("endDate", now(getLocalTimeZone()))
 
     const handleUploadBanner = (files: FileList, onChange: (files: FileList | undefined) => void) => {
         handleUploadFile(files, onChange, (fileUrl: string | undefined) => {
@@ -112,12 +117,12 @@ const useAddEvent = () => {
         }
     })
 
-    const handleAddEvent = (data: IEventForm) => {
-        const payload = {
+    const handleAddEvent = (data: AddEventFormValues) => {
+        const payload: IEvent = {
             ...data,
-            isFeatured: Boolean(data.isFeatured),
-            isPublish: Boolean(data.isPublish),
-            isOnline: Boolean(data.isOnline),
+            isFeatured: data.isFeatured === "true",
+            isPublish: data.isPublish === "true",
+            isOnline: data.isOnline === "true",
             startDate: toDateStandard(data.startDate),
             endDate: toDateStandard(data.endDate),
             location: {

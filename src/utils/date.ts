@@ -1,6 +1,14 @@
 import { DateValue } from "@heroui/react";
 import { parseAbsoluteToLocal } from "@internationalized/date";
 
+const standardTime = (time: number) => {
+  if (time < 10) {
+    return `0${time}`;
+  } else {
+    return time;
+  }
+};
+
 const toDateStandard = (date: DateValue) => {
   const year = date.year;
   const month = date.month;
@@ -10,13 +18,13 @@ const toDateStandard = (date: DateValue) => {
   const minute = "minute" in date ? date.minute : 0;
   const second = "second" in date ? date.second : 0;
 
-  const result = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+  const result = `${year}-${month}-${day} ${standardTime(hour)}:${standardTime(minute)}:${standardTime(second)}`;
   return result;
 };
 
 const toInputDate = (date: string) => {
   const formatDate = parseAbsoluteToLocal(`${date.replace(" ", "T")}+07:00`);
-  return formatDate
+  return formatDate;
 };
 
 export { toDateStandard, toInputDate };

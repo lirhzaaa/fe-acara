@@ -103,8 +103,8 @@ const AddEvent = (props: IAddEvent) => {
                     variant="bordered"
                     showMonthAndYearPickers
                     defaultValue={now(getLocalTimeZone())}
-                    isInvalid={errors.startDate !== undefined}
-                    errorMessage={errors.startDate?.message}
+                    isInvalid={errors.endDate !== undefined}
+                    errorMessage={errors.endDate?.message}
                   />
                 )} />
                 <Controller name="isPublish" control={control} render={({ field }) => (
@@ -129,8 +129,8 @@ const AddEvent = (props: IAddEvent) => {
                     errorMessage={errors.isFeatured?.message}
                     disallowEmptySelection
                   >
-                    <SelectItem key="true" textValue="true">Yes</SelectItem>
-                    <SelectItem key="false" textValue="false">No</SelectItem>
+                    <SelectItem key="true" textValue="Yes">Yes</SelectItem>
+                    <SelectItem key="false" textValue="No">No</SelectItem>
                   </Select>
                 )} />
 
@@ -143,8 +143,8 @@ const AddEvent = (props: IAddEvent) => {
                     errorMessage={errors.isOnline?.message}
                     disallowEmptySelection
                   >
-                    <SelectItem key="true" textValue="true">Online</SelectItem>
-                    <SelectItem key="false" textValue="false">Offline</SelectItem>
+                    <SelectItem key="true" textValue="Online">Online</SelectItem>
+                    <SelectItem key="false" textValue="Offline">Offline</SelectItem>
                   </Select>
                 )} />
 
