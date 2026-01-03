@@ -38,7 +38,7 @@ const AddCategory = (props: IAddCategory) => {
         }
     }, [isSuccessMutateAddCategory])
 
-    const disableSUbmit = isPendingMutateAddCategory || isPendingMutateUploadFile || isPendingMutateDeleteFile
+    const disableSubmit = isPendingMutateAddCategory || isPendingMutateUploadFile || isPendingMutateDeleteFile
 
     return (
         <Modal onOpenChange={onOpenChange} isOpen={isOpen} placement="center" scrollBehavior="inside" onClose={() => handleOnClose(onClose)}>
@@ -73,10 +73,10 @@ const AddCategory = (props: IAddCategory) => {
                         </div>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="danger" variant="flat" onPress={() => handleOnClose(onClose)} disabled={disableSUbmit}>
+                        <Button color="danger" variant="flat" onPress={() => handleOnClose(onClose)} disabled={disableSubmit}>
                             Cancel
                         </Button>
-                        <Button color="danger" type="submit" disabled={disableSUbmit}>
+                        <Button color="danger" type="submit" disabled={disableSubmit}>
                             {isPendingMutateAddCategory ? (
                                 <Spinner size="sm" color="white" />
                             ) : "Create Category"}

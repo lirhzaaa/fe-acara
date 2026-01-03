@@ -1,9 +1,25 @@
-interface IEvent {
-  _id?: string;
-  name?: string;
-  banner: string;
-  category: string;
-  description?: string;
+interface IRegency {
+  id: string
+  name: string
 }
 
-export { IEvent };
+interface IEvent {
+  banner: string;
+  name: string;
+  slug: string;
+  category: string;
+  description: string;
+  isFeatured: boolean;
+  isPublish: boolean;
+  startDate: string;
+  endDate: string;
+  location: {
+    region: string;
+    coordinate: {
+      x: number;
+      y: number;
+    };
+  };
+}
+
+export type { IRegency, IEvent };

@@ -1,9 +1,14 @@
+import { DELAY } from "@/constants/list.constatns"
+import useDebounce from "@/hooks/useDebounce"
 import useMediaHandling from "@/hooks/useMediaHandling"
 import categoryServices from "@/services/category.service"
+import eventServices from "@/services/event.service"
 import { ICategory } from "@/types/Category"
 import { addToast, DateValue } from "@heroui/react"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { useRouter } from "next/router"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import * as Yup from "yup"
 
@@ -18,15 +23,21 @@ const schema = Yup.object().shape({
     description: Yup.string().required("Please input description"),
     isOnline: Yup.string().required("Please select online or offline"),
     region: Yup.string().required("Please select region"),
-    banner: Yup.mixed<FileList | string>().required("Please input icon")
+    latitude: Yup.string().required("Please input latitude coordinate"),
+    longitude: Yup.string().required("Please input longitude coordinate"),
+    banner: Yup.mixed<FileList | string>().required("Please input Banner")
 })
 
 const useAddEvent = () => {
+    const router = useRouter()
+    const debounce = useDebounce()
+
     const {
-        mutateUploadFile,
         isPendingMutateUploadFile,
-        mutateDeleteFile,
-        isPendingMutateDeleteFile
+        isPendingMutateDeleteFile,
+
+        handleUploadFile,
+        handleDeleteFile,
     } = useMediaHandling()
 
     const {
@@ -36,41 +47,45 @@ const useAddEvent = () => {
     })
 
     const preview = watch("banner")
+    const fileUrl = getValues("banner")
 
     const handleUploadBanner = (files: FileList, onChange: (files: FileList | undefined) => void) => {
-        if (files.length !== 0) {
-            onChange(files)
-            mutateUploadFile({
-                file: files[0],
-                callback: (fileUrl: string) => {
-                    setValue("banner", fileUrl)
-                }
-            })
-        }
+        handleUploadFile(files, onChange, (fileUrl: string | undefined) => {
+            if (fileUrl) {
+                setValue("banner", fileUrl)
+            }
+        })
     }
 
     const handleDeleteBanner = (
-        onchange: (files: FileList | undefined) => void
+        onChange: (files: FileList | undefined) => void
     ) => {
-        const fileUrl = getValues("banner")
-        if (typeof fileUrl === "string") {
-            mutateDeleteFile({ fileUrl, callback: () => onchange(undefined) })
-        }
+        handleDeleteFile(fileUrl, () => onChange(undefined))
     }
 
     const handleOnClose = (onClose: () => void) => {
-        const fileUrl = getValues("banner")
-        if (typeof fileUrl === "string") {
-            mutateDeleteFile({
-                fileUrl, callback: () => {
-                    reset()
-                    onClose()
-                }
-            })
-        } else {
-            reset();
+        handleDeleteFile(fileUrl, () => {
+            reset()
             onClose()
-        }
+        })
+    }
+
+    const { data: dataCategory } = useQuery({
+        queryKey: ["Categories"],
+        queryFn: () => categoryServices.getCategories(),
+        enabled: router.isReady,
+    });
+
+    const [searchRegency, setSearchRegency] = useState<string>("")
+
+    const { data: dataRegion } = useQuery({
+        queryKey: ["region", searchRegency],
+        queryFn: () => eventServices.searchLocationByRegency(`${searchRegency}`),
+        enabled: searchRegency !== ""
+    })
+
+    const handleSearchRegion = (region: string) => {
+        debounce(() => setSearchRegency(region), DELAY)
     }
 
     const addEvent = async (payload: ICategory) => {
@@ -89,7 +104,7 @@ const useAddEvent = () => {
         onSuccess: () => {
             addToast({
                 title: "Success",
-                description: "Success add category",
+                description: "Success add event",
                 color: "success"
             })
             reset()
@@ -109,12 +124,17 @@ const useAddEvent = () => {
         isSuccessMutateAddEvent,
 
         preview,
-        handleUploadIcon,
-        handleDeleteIcon,
+        handleUploadBanner,
+        handleDeleteBanner,
         isPendingMutateDeleteFile,
         isPendingMutateUploadFile,
 
-        handleOnClose
+        handleOnClose,
+
+        dataCategory,
+        dataRegion,
+        searchRegency,
+        handleSearchRegion
     }
 }
 
