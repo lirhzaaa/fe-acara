@@ -9,6 +9,7 @@ import AddCategory from "./AddCategory";
 import DeleteCategory from "./DeleteCategory";
 import Image from "next/image";
 import useChangeUrl from "@/hooks/useChangeUrl";
+import DropdownAction from "@/components/commons/DropdownAction";
 
 const Category = () => {
     const { push, isReady, query } = useRouter();
@@ -40,18 +41,15 @@ const Category = () => {
                     )
                 case "actions":
                     return (
-                        <Dropdown>
-                            <DropdownTrigger>
-                                <Button isIconOnly size="sm" variant="bordered"><CiMenuKebab className="text-default-700" /></Button>
-                            </DropdownTrigger>
-                            <DropdownMenu aria-label="Dropdown Actions">
-                                <DropdownItem key="detail" onPress={() => push(`/admin/category/${category._id}`)}>Detail</DropdownItem>
-                                <DropdownItem key="delete" onPress={() => {
-                                    setSelectedId(`${category._id}`);
-                                    deleteCategory.onOpen()
-                                }} className="text-danger-500">Delete</DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown >
+                        <DropdownAction
+                            textButtonDetail="Detail Category"
+                            textButtonDelete="Delete Category"
+                            onPressButtonDetail={() => push(`/admin/category/${category._id}`)}
+                            onPressButtonDelete={() => {
+                                setSelectedId(`${category._id}`);
+                                deleteCategory.onOpen()
+                            }}
+                        />
                     )
                 default:
                     return cellValue as ReactNode;

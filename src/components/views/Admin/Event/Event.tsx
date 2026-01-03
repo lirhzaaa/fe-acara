@@ -9,6 +9,7 @@ import useChangeUrl from "@/hooks/useChangeUrl"
 import { COLUMN_LIST_EVENT } from "./Event.constants"
 import Image from "next/image"
 import AddEvent from "./AddEvent"
+import DropdownAction from "@/components/commons/DropdownAction"
 
 const Event = () => {
     const { push, isReady, query } = useRouter()
@@ -42,24 +43,15 @@ const Event = () => {
                     )
                 case "actions":
                     return (
-                        <Dropdown>
-                            <DropdownTrigger>
-                                <Button isIconOnly size="sm" variant="bordered">
-                                    <CiMenuKebab className="text-default-700" />
-                                </Button>
-                            </DropdownTrigger>
-                            <DropdownMenu aria-label="Dropdown Actions">
-                                <DropdownItem key="detail" onPress={() => push(`/admin/event/${event._id}`)}>
-                                    Detail
-                                </DropdownItem>
-                                <DropdownItem key="delete" onPress={() => {
-                                    setSelectedId(`${event._id}`)
-                                    deleteEvent.onOpen()
-                                }} className="text-danger-500">
-                                    Delete
-                                </DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
+                        <DropdownAction
+                            textButtonDetail="Detail Event"
+                            textButtonDelete="Delete Event"
+                            onPressButtonDetail={() => push(`/admin/event/${event._id}`)}
+                            onPressButtonDelete={() => {
+                                setSelectedId(`${event._id}`)
+                                deleteEvent.onOpen()
+                            }}
+                        />
                     )
                 default:
                     return cellValue as ReactNode

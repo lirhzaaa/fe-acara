@@ -12,7 +12,7 @@ const useEvent = () => {
     const getEvents = async () => {
         let params = `limit=${currentLimit}&page=${currentPage}`
         if (currentSearch) {
-            params += `$search=${currentSearch}`
+            params += `&search=${currentSearch}`
         }
 
         const result = await eventServices.getEvents(params)
