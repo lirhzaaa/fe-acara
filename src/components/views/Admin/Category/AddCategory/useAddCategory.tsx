@@ -21,10 +21,11 @@ const schema = Yup.object().shape({
 
 const useAddCategory = () => {
     const {
-        mutateUploadFile,
         isPendingMutateUploadFile,
-        mutateDeleteFile,
-        isPendingMutateDeleteFile
+        isPendingMutateDeleteFile,
+
+        handleUploadFile,
+        handleDeleteFile,
     } = useMediaHandling()
 
     const {
@@ -39,39 +40,27 @@ const useAddCategory = () => {
     })
 
     const preview = watch("icon")
+    const fileUrl = getValues("icon")
 
     const handleUploadIcon = (files: FileList, onChange: (files: FileList | undefined) => void) => {
-        if (files.length !== 0) {
-            onChange(files)
-            mutateUploadFile({
-                file: files[0],
-                callback: (fileUrl: string) => {
-                    setValue("icon", fileUrl)
-                }
-            })
-        }
+        handleUploadFile(files, onChange, (fileUrl: string | undefined) => {
+            if (fileUrl) {
+                setValue("icon", fileUrl)
+            }
+        })
     }
 
     const handleDeleteIcon = (
-        onchange: (files: FileList | undefined) => void
+        onChange: (files: FileList | undefined) => void
     ) => {
-        const fileUrl = getValues("icon")
-        if (typeof fileUrl === "string") {
-            mutateDeleteFile({ fileUrl, callback: () => onchange(undefined) })
-        }
+        handleDeleteFile(fileUrl, () => onChange(undefined))
     }
 
     const handleOnClose = (onClose: () => void) => {
-        const fileUrl = getValues("icon")
-        if (typeof fileUrl === "string") {
-            mutateDeleteFile({ fileUrl, callback: () => {
-                reset()
-                onClose()
-            } })
-        } else {
-            reset();
+        handleDeleteFile(fileUrl, () => {
+            reset()
             onClose()
-        }
+        })
     }
 
     const addCategory = async (payload: ICategory) => {
