@@ -1,25 +1,33 @@
+import { DateValue } from "@heroui/react";
+
 interface IRegency {
-  id: string
-  name: string
+  id: string;
+  name: string;
 }
 
 interface IEvent {
-  banner: string;
+  banner: string | FileList;
   name: string;
   slug: string;
   category: string;
   description: string;
-  isFeatured: boolean;
-  isPublish: boolean;
+  isFeatured: boolean | string;
+  isOnline: boolean | string;
+  isPublish: boolean | string;
   startDate: string;
   endDate: string;
-  location: {
+  location?: {
     region: string;
-    coordinate: {
-      x: number;
-      y: number;
-    };
+    coordinates: number[];
   };
 }
 
-export type { IRegency, IEvent };
+interface IEventForm extends IEvent {
+  region: string;
+  startDate: DateValue;
+  endDate: DateValue;
+  latitude: string;
+  longitude: string;
+}
+
+export type { IRegency, IEvent, IEventForm };

@@ -1,9 +1,9 @@
 import { DELAY } from "@/constants/list.constatns"
 import useDebounce from "@/hooks/useDebounce"
 import useMediaHandling from "@/hooks/useMediaHandling"
-import categoryServices from "@/services/category.service"
 import eventServices from "@/services/event.service"
-import { ICategory } from "@/types/Category"
+import { IEvent, IEventForm } from "@/types/Event"
+import { toDateStandard } from "@/utils/date"
 import { addToast, DateValue } from "@heroui/react"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useMutation, useQuery } from "@tanstack/react-query"
@@ -72,7 +72,7 @@ const useAddEvent = () => {
 
     const { data: dataCategory } = useQuery({
         queryKey: ["Categories"],
-        queryFn: () => categoryServices.getCategories(),
+        queryFn: () => eventServices.getEvents(),
         enabled: router.isReady,
     });
 
@@ -88,8 +88,8 @@ const useAddEvent = () => {
         debounce(() => setSearchRegency(region), DELAY)
     }
 
-    const addEvent = async (payload: ICategory) => {
-        return await categoryServices.addCategories(payload)
+    const addEvent = async (payload: IEvent) => {
+        return await eventServices.addEvents(payload)
     }
 
     const { mutate: mutateAddEvent, isPending: isPendingMutateAddEvent, isSuccess: isSuccessMutateAddEvent } = useMutation({
@@ -111,7 +111,22 @@ const useAddEvent = () => {
         }
     })
 
-    const handleAddEvent = (data: ICategory) => mutateAddEvent(data)
+    const handleAddEvent = (data: IEventForm) => {
+        const payload = {
+            ...data,
+            isFeatured: Boolean(data.isFeatured),
+            isPublish: Boolean(data.isPublish),
+            isOnline: Boolean(data.isOnline),
+            startDate: toDateStandard(data.startDate),
+            endDate: toDateStandard(data.endDate),
+            location: {
+                region: data.region,
+                coordinates: [Number(data.latitude), Number(data.longitude)]
+            },
+            banner: data.banner
+        }
+        mutateAddEvent(payload)
+    }
 
     return {
         control,

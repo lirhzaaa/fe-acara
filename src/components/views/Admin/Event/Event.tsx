@@ -1,8 +1,6 @@
 import DataTable from "@/components/ui/DataTable/DataTable"
 import { Key, ReactNode, useCallback, useEffect } from "react"
-// import Image from "next/image"
-import { Button, Chip, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, useDisclosure } from "@heroui/react"
-import { CiMenuKebab } from "react-icons/ci"
+import { Chip, useDisclosure } from "@heroui/react"
 import { useRouter } from "next/router"
 import useEvent from "./useEvent"
 import useChangeUrl from "@/hooks/useChangeUrl"
@@ -29,9 +27,9 @@ const Event = () => {
 
     useEffect(() => {
         if (isReady) {
-            setURL()
+            setURL();
         }
-    }, [isReady])
+    }, [isReady]);
 
     const renderCell = useCallback(
         (event: Record<string, unknown>, columnKey: Key) => {
@@ -79,8 +77,6 @@ const Event = () => {
                     emptyContent="Event is empty"
                 />
             )}
-
-
 
             <AddEvent
                 {...addEvent}

@@ -1,10 +1,11 @@
 import InputFile from "@/components/ui/InputFile"
-import { Autocomplete, AutocompleteItem, Button, DatePicker, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Textarea } from "@heroui/react"
+import { Autocomplete, AutocompleteItem, Button, DatePicker, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Spinner, Textarea } from "@heroui/react"
 import useAddEvent from "./useAddEvent"
 import { useEffect } from "react"
 import { Controller } from "react-hook-form"
 import { ICategory } from "@/types/Category"
 import { IRegency } from "@/types/Event"
+import { getLocalTimeZone, now } from "@internationalized/date"
 
 interface IAddEvent {
   isOpen: boolean
@@ -12,10 +13,6 @@ interface IAddEvent {
   onOpenChange: () => void
   refetchEvent: () => void
 }
-
-export const categoryEvent = [
-  { key: "acara", label: "Acara" }
-]
 
 const AddEvent = (props: IAddEvent) => {
   const { isOpen, onClose, onOpenChange, refetchEvent } = props
@@ -93,6 +90,7 @@ const AddEvent = (props: IAddEvent) => {
                     label="Start Date"
                     variant="bordered"
                     showMonthAndYearPickers
+                    defaultValue={now(getLocalTimeZone())}
                     isInvalid={errors.startDate !== undefined}
                     errorMessage={errors.startDate?.message}
                   />
@@ -104,6 +102,7 @@ const AddEvent = (props: IAddEvent) => {
                     label="End Date"
                     variant="bordered"
                     showMonthAndYearPickers
+                    defaultValue={now(getLocalTimeZone())}
                     isInvalid={errors.startDate !== undefined}
                     errorMessage={errors.startDate?.message}
                   />
@@ -181,7 +180,7 @@ const AddEvent = (props: IAddEvent) => {
                   </Autocomplete>
                 )} />
 
-                <Controller name="latitude" control={control} render={({ field: { onChange, ...field } }) => (
+                <Controller name="latitude" control={control} render={({ field }) => (
                   <Input
                     {...field}
                     label="Latitude"
@@ -191,7 +190,7 @@ const AddEvent = (props: IAddEvent) => {
                     errorMessage={errors.latitude?.message} />
                 )} />
 
-                <Controller name="longitude" control={control} render={({ field: { onChange, ...field } }) => (
+                <Controller name="longitude" control={control} render={({ field }) => (
                   <Input
                     {...field}
                     label="Longitude"
@@ -219,11 +218,15 @@ const AddEvent = (props: IAddEvent) => {
             </div>
           </ModalBody>
           <ModalFooter>
-            <Button color="danger" variant="flat" onPress={() => { onClose() }}>
+            <Button color="danger" variant="flat" onPress={() => handleOnClose(onClose)}>
               Cancel
             </Button>
-            <Button color="danger" type="submit">
-              Create Event
+            <Button color="danger" type="submit" disabled={disableSubmit}>
+              {isPendingMutateAddEvent ? (
+                <Spinner size="sm" color="white" />
+              ) : (
+                "Create Event"
+              )}
             </Button>
           </ModalFooter>
         </ModalContent>

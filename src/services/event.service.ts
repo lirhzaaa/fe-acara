@@ -4,7 +4,7 @@ import { IEvent } from "@/types/Event";
 
 const eventServices = {
   addEvents: (payload: IEvent) => {
-    instance.post(`/create${endpoint.EVENT}`, payload);
+    instance.post(`${endpoint.EVENT}`, payload);
   },
   getEvents: (params?: string) =>
     instance.get(`${endpoint.EVENT}?${params}`),
