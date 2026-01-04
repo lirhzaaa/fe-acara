@@ -7,31 +7,32 @@ import { useRouter } from "next/router"
 const useDetailEvent = () => {
     const { query, isReady } = useRouter()
 
-    // const {
-    //     mutate: mutateUpdateEvent,
-    //     isPending: isPendingMutateEvent,
-    //     isSuccess: isSuccessMutateEvent,
-    // } = useMutation({
-    //     mutationFn: (payload: IEvent) => UpdateEvent(payload),
-    //     onError: (error) => {
-    //         addToast({
-    //             title: "Error",
-    //             description: error.message,
-    //             color: "danger"
-    //         })
-    //     },
-    //     onSuccess: () => {
-    //         addToast({
-    //             title: "Success",
-    //             description: "Success Update Event",
-    //             color: "success"
-    //         })
-    //     }
-    // })
+    const {
+        mutate: mutateUpdateEvent,
+        isPending: isPendingMutateEvent,
+        isSuccess: isSuccessMutateEvent,
+    } = useMutation({
+        mutationFn: (payload: IEvent) => updateEvent(payload),
+        onError: (error) => {
+            addToast({
+                title: "Error",
+                description: error.message,
+                color: "danger"
+            })
+        },
+        onSuccess: () => {
+            refetchEvent()
+            addToast({
+                title: "Success",
+                description: "Success Update Event",
+                color: "success"
+            })
+        }
+    })
 
 
     const getEventById = async (id: string) => {
-        const { data } = await eventServices.getEvents(id)
+        const { data } = await eventServices.getEventsById(id)
         return data.data
     }
 
@@ -41,14 +42,20 @@ const useDetailEvent = () => {
         enabled: isReady
     })
 
+    const updateEvent = async (payload: IEvent) => {
+        const { data } = await eventServices.updateEvents(`${query.id}`, payload)
+        return data.data
+    }
+
+    const handleUpdateEvent = (data: IEvent) => mutateUpdateEvent(data)
+
     return {
         dataEvent,
+        handleUpdateEvent,
+        mutateUpdateEvent,
 
-        // mutateUpdateEvent,
-
-
-        // isPendingMutateEvent,
-        // isSuccessMutateEvent
+        isPendingMutateEvent,
+        isSuccessMutateEvent
     }
 }
 

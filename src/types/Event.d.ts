@@ -6,19 +6,19 @@ interface IRegency {
 }
 
 interface IEvent {
-  banner: string | FileList;
-  name: string;
-  slug: string;
-  category: string;
-  description: string;
-  isFeatured: boolean;
-  isOnline: boolean;
-  isPublish: boolean;
-  startDate: string;
-  endDate: string;
+  banner?: string | FileList;
+  name?: string;
+  slug?: string;
+  category?: string;
+  description?: string;
+  isFeatured?: boolean;
+  isOnline?: boolean;
+  isPublish?: boolean;
+  startDate?: string;
+  endDate?: string;
   location?: {
-    region: string;
-    coordinates: number[];
+    region?: string;
+    coordinates?: number[];
   };
 }
 
