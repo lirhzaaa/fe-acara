@@ -6,7 +6,6 @@ import { useEffect } from "react"
 import { ICategory } from "@/types/Category"
 import { toInputDate } from "@/utils/date"
 
-
 interface IInfoTypes {
     dataEvent: IEvent
     onUpdate: (data: IEventForm) => void

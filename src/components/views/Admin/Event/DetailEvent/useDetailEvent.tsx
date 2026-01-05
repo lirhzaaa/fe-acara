@@ -49,7 +49,6 @@ const useDetailEvent = () => {
     }
 
     const handleUpdateEvent = (data: IEventForm) => {
-        console.log("Form submitted:", data)
         const payload = {
             ...data,
             isFeatured: data.isFeatured !== undefined ? Boolean(data.isFeatured) : dataEvent.isFeatured,
@@ -69,10 +68,19 @@ const useDetailEvent = () => {
         mutateUpdateEvent(payload)
     }
 
+    const { data: dataDefaultRegion, isPending: isPendingUpdateRegion } = useQuery({
+        queryKey: ["regency"],
+        queryFn: () => eventServices.getRegencyById(dataEvent?.location?.region),
+        enabled: !!dataEvent?.location?.region
+    })
+
     return {
         dataEvent,
         handleUpdateEvent,
         mutateUpdateEvent,
+
+        dataDefaultRegion,
+        isPendingUpdateRegion,
 
         isPendingMutateEvent,
         isSuccessMutateEvent
