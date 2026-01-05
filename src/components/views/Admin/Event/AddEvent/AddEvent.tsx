@@ -5,7 +5,6 @@ import { useEffect } from "react"
 import { Controller } from "react-hook-form"
 import { ICategory } from "@/types/Category"
 import { IRegency } from "@/types/Event"
-import { getLocalTimeZone, now } from "@internationalized/date"
 
 interface IAddEvent {
   isOpen: boolean
@@ -90,7 +89,6 @@ const AddEvent = (props: IAddEvent) => {
                     label="Start Date"
                     variant="bordered"
                     showMonthAndYearPickers
-                    defaultValue={now(getLocalTimeZone())}
                     isInvalid={errors.startDate !== undefined}
                     errorMessage={errors.startDate?.message}
                   />
@@ -98,11 +96,10 @@ const AddEvent = (props: IAddEvent) => {
                 <Controller name="endDate" control={control} render={({ field }) => (
                   <DatePicker
                     {...field}
-                    hideTimeZone
                     label="End Date"
                     variant="bordered"
+                    hideTimeZone
                     showMonthAndYearPickers
-                    defaultValue={now(getLocalTimeZone())}
                     isInvalid={errors.endDate !== undefined}
                     errorMessage={errors.endDate?.message}
                   />

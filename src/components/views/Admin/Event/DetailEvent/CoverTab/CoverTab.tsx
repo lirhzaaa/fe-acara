@@ -4,10 +4,11 @@ import { Button, Card, CardBody, CardHeader, Skeleton, Spinner } from "@heroui/r
 import Image from "next/image"
 import { Controller } from "react-hook-form"
 import InputFile from "@/components/ui/InputFile"
+import { IEventForm } from "@/types/Event"
 
 interface ICoverTypes {
     currentCover: string
-    onUpdate: (data: { banner: FileList | string }) => void
+    onUpdate: (data: IEventForm) => void
     isPendingUpdateEvent: boolean
     isSuccessUpdateEvent: boolean
 }

@@ -7,7 +7,7 @@ import { IEvent } from "@/types/Event"
 import { toDateStandard } from "@/utils/date"
 import { addToast, DateValue } from "@heroui/react"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { getLocalTimeZone, now, toTimeZone } from "@internationalized/date"
+import { getLocalTimeZone, now } from "@internationalized/date"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useRouter } from "next/router"
 import { useState } from "react"
@@ -21,10 +21,10 @@ const schema = Yup.object().shape({
     category: Yup.string().required("Please select category"),
     startDate: Yup.mixed<DateValue>().required("Please select start date"),
     endDate: Yup.mixed<DateValue>().required("Please select end date"),
-    isPublish: Yup.string().required("Please select status"),
-    isFeatured: Yup.string().required("Please select featured"),
+    isPublish: Yup.boolean().required("Please select status"),
+    isFeatured: Yup.boolean().required("Please select featured"),
     description: Yup.string().required("Please input description"),
-    isOnline: Yup.string().required("Please select online or offline"),
+    isOnline: Yup.boolean().required("Please select online or offline"),
     region: Yup.string().required("Please select region"),
     latitude: Yup.string().required("Please input latitude coordinate"),
     longitude: Yup.string().required("Please input longitude coordinate"),
@@ -46,14 +46,15 @@ const useAddEvent = () => {
     const {
         control, handleSubmit: handleSubmitForm, formState: { errors }, reset, watch, getValues, setValue
     } = useForm({
-        resolver: yupResolver(schema)
+        resolver: yupResolver(schema),
+        defaultValues: {
+            startDate: now(getLocalTimeZone()),
+            endDate: now(getLocalTimeZone()),
+        }
     })
 
     const preview = watch("banner")
     const fileUrl = getValues("banner")
-
-    setValue("startDate", now(getLocalTimeZone()))
-    setValue("endDate", now(getLocalTimeZone()))
 
     const handleUploadBanner = (files: FileList, onChange: (files: FileList | undefined) => void) => {
         handleUploadFile(files, onChange, (fileUrl: string | undefined) => {
@@ -120,11 +121,11 @@ const useAddEvent = () => {
     const handleAddEvent = (data: AddEventFormValues) => {
         const payload: IEvent = {
             ...data,
-            isFeatured: data.isFeatured === "true",
-            isPublish: data.isPublish === "true",
-            isOnline: data.isOnline === "true",
-            startDate: toDateStandard(data.startDate),
-            endDate: toDateStandard(data.endDate),
+            isFeatured: Boolean(data.isFeatured),
+            isPublish: Boolean(data.isPublish),
+            isOnline: Boolean(data.isOnline),
+            startDate: data.startDate ? toDateStandard(data.startDate) : "",
+            endDate: data.endDate ? toDateStandard(data.endDate) : "",
             location: {
                 region: data.region,
                 coordinates: [Number(data.latitude), Number(data.longitude)]
@@ -136,9 +137,9 @@ const useAddEvent = () => {
 
     return {
         control,
+        handleSubmitForm,
         errors,
         reset,
-        handleSubmitForm,
 
         handleAddEvent,
         isPendingMutateAddEvent,
@@ -147,15 +148,14 @@ const useAddEvent = () => {
         preview,
         handleUploadBanner,
         handleDeleteBanner,
-        isPendingMutateDeleteFile,
         isPendingMutateUploadFile,
-
-        handleOnClose,
+        isPendingMutateDeleteFile,
 
         dataCategory,
         dataRegion,
         searchRegency,
-        handleSearchRegion
+        handleSearchRegion,
+        handleOnClose,
     }
 }
 

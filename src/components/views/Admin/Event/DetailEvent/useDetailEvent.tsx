@@ -1,5 +1,6 @@
 import eventServices from "@/services/event.service"
-import { IEvent } from "@/types/Event"
+import { IEvent, IEventForm } from "@/types/Event"
+import { toDateStandard } from "@/utils/date"
 import { addToast } from "@heroui/react"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useRouter } from "next/router"
@@ -47,7 +48,26 @@ const useDetailEvent = () => {
         return data.data
     }
 
-    const handleUpdateEvent = (data: IEvent) => mutateUpdateEvent(data)
+    const handleUpdateEvent = (data: IEventForm) => {
+        console.log("Form submitted:", data)
+        const payload = {
+            ...data,
+            isFeatured: data.isFeatured !== undefined ? Boolean(data.isFeatured) : dataEvent.isFeatured,
+            isPublish: data.isPublish !== undefined ? Boolean(data.isPublish) : dataEvent.isPublish,
+            startDate: data.startDate ? toDateStandard(data.startDate) : dataEvent.startDate,
+            endDate: data.endDate ? toDateStandard(data.endDate) : dataEvent.endDate,
+            location: {
+                region: data.region || dataEvent.location.region,
+                coordinates: [
+                    data.latitude ? Number(data.latitude) : dataEvent.location.coordinates[0],
+                    data.longitude ? Number(data.longitude) : dataEvent.location.coordinates[1],
+                ]
+            },
+
+            banner: data.banner || dataEvent.banner
+        }
+        mutateUpdateEvent(payload)
+    }
 
     return {
         dataEvent,
