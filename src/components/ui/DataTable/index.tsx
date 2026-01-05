@@ -1,2 +1,2 @@
-import CategoryDataTable from "./CategoryDataTable";
-export default CategoryDataTable
+import DataTable from "./DataTable";
+export default DataTable

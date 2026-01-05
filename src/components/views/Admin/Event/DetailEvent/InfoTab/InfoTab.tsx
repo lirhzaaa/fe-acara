@@ -117,7 +117,6 @@ const InfoTab = (props: IInfoTypes) => {
                                 showMonthAndYearPickers
                                 hideTimeZone
                                 variant="bordered"
-                                // defaultValue={}
                                 isInvalid={errorsUpdateInformation.startDate !== undefined}
                                 errorMessage={errorsUpdateInformation.startDate?.message}
                             />
@@ -132,49 +131,54 @@ const InfoTab = (props: IInfoTypes) => {
                                 showMonthAndYearPickers
                                 hideTimeZone
                                 variant="bordered"
-                                // defaultValue={}
                                 isInvalid={errorsUpdateInformation.endDate !== undefined}
                                 errorMessage={errorsUpdateInformation.endDate?.message}
                             />
                         )} />
                     </Skeleton>
                     <Skeleton isLoaded={dataEvent?.isPublish !== undefined} className="rounded-lg">
-                        <Controller name="isPublish" control={controlUpdateInformation} render={({ field }) => (
-                            <Select
-                                {...field}
-                                label="Status"
-                                labelPlacement="outside"
-                                variant="bordered"
-                                isInvalid={errorsUpdateInformation.isPublish !== undefined}
-                                errorMessage={errorsUpdateInformation.isPublish?.message}
-                                disallowEmptySelection
-                                defaultSelectedKeys={[
-                                    dataEvent?.isPublish ? "true" : "false"
-                                ]}
-                            >
-                                <SelectItem key="true" textValue="Published">Published</SelectItem>
-                                <SelectItem key="false" textValue="Not Published">Not Published</SelectItem>
-                            </Select>
-                        )} />
+                        <Controller
+                            name="isPublish"
+                            control={controlUpdateInformation}
+                            render={({ field }) => (
+                                <Select
+                                    label="Status"
+                                    labelPlacement="outside"
+                                    variant="bordered"
+                                    disallowEmptySelection
+                                    selectedKeys={new Set([String(field.value)])}
+                                    isInvalid={errorsUpdateInformation.isPublish !== undefined}
+                                    errorMessage={errorsUpdateInformation.isPublish?.message}
+                                    onSelectionChange={(keys) => {
+                                        field.onChange(keys.currentKey === "true")
+                                    }}>
+                                    <SelectItem key="true">Published</SelectItem>
+                                    <SelectItem key="false">Not Published</SelectItem>
+                                </Select>
+                            )}
+                        />
                     </Skeleton>
-                    <Skeleton isLoaded={!!dataEvent?.isFeatured} className="rounded-lg">
-                        <Controller name="isFeatured" control={controlUpdateInformation} render={({ field }) => (
-                            <Select
-                                {...field}
-                                label="Featured"
-                                labelPlacement="outside"
-                                variant="bordered"
-                                isInvalid={errorsUpdateInformation.isFeatured !== undefined}
-                                errorMessage={errorsUpdateInformation.isFeatured?.message}
-                                disallowEmptySelection
-                                defaultSelectedKeys={[
-                                    dataEvent?.isFeatured ? "true" : "false"
-                                ]}
-                            >
-                                <SelectItem key="true" textValue="Yes">Yes</SelectItem>
-                                <SelectItem key="false" textValue="No">No</SelectItem>
-                            </Select>
-                        )} />
+                    <Skeleton isLoaded={dataEvent?.isFeatured !== undefined} className="rounded-lg">
+                        <Controller
+                            name="isFeatured"
+                            control={controlUpdateInformation}
+                            render={({ field }) => (
+                                <Select
+                                    label="Featured"
+                                    labelPlacement="outside"
+                                    variant="bordered"
+                                    disallowEmptySelection
+                                    selectedKeys={new Set([String(field.value)])}
+                                    isInvalid={errorsUpdateInformation.isFeatured !== undefined}
+                                    errorMessage={errorsUpdateInformation.isFeatured?.message}
+                                    onSelectionChange={(keys) => {
+                                        field.onChange(keys.currentKey === "true")
+                                    }}>
+                                    <SelectItem key="true">Yes</SelectItem>
+                                    <SelectItem key="false">No</SelectItem>
+                                </Select>
+                            )}
+                        />
                     </Skeleton>
                     <Skeleton isLoaded={!!dataEvent?.description} className="rounded-lg">
                         <Controller name="description" control={controlUpdateInformation} render={({ field }) => (

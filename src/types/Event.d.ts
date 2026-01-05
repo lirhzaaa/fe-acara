@@ -23,7 +23,7 @@ interface IEvent {
 }
 
 interface IEventForm extends IEvent {
-  region?: string;
+  region?: number;
   startDate?: DateValue;
   endDate?: DateValue;
   latitude?: string;
