@@ -6,6 +6,7 @@ import { Fragment, Key, ReactNode, useCallback, useState } from "react"
 import { COLUMN_LIST_TICKET } from "./Ticket.constants"
 import useTicketTab from "./useTicketTab"
 import AddTicket from "./AddTicket"
+import UpdateTicket from "./UpdateTicket"
 import DeleteTicket from "./DeleteTicket"
 import { ITicket } from "@/types/Ticket"
 
@@ -31,11 +32,11 @@ const TicketTab = () => {
                 case "actions":
                     return (
                         <DropdownAction
-                            textButtonDetail="Detail Ticket"
-                            textButtonDelete="Delete Ticket"
+                            textButtonDetail="Edit"
+                            textButtonDelete="Delete"
                             onPressButtonDetail={() => {
                                 updateTicketModal.onOpen()
-                                // setSelectedDataTicket(ticket as ITicket)
+                                setSelectedDataTicket(ticket as ITicket)
                             }}
                             onPressButtonDelete={() => {
                                 deleteTicketModal.onOpen()
@@ -75,6 +76,12 @@ const TicketTab = () => {
             </Card>
 
             <AddTicket {...addTicketModal} refetchTicket={refetchTicket} />
+            <UpdateTicket
+                {...updateTicketModal}
+                selectedDataTicket={selectedDataTicket}
+                setSelectedDataTicket={setSelectedDataTicket}
+                refetchTicket={refetchTicket}
+            />
             <DeleteTicket
                 {...deleteTicketModal}
                 selectedDataTicket={selectedDataTicket}
