@@ -6,16 +6,15 @@ import { useForm } from "react-hook-form"
 import * as Yup from "yup"
 
 const schemaUpdateInformation = Yup.object().shape({
-    name: Yup.string().required(),
-    slug: Yup.string().required(),
-    category: Yup.string().required(),
-    startDate: Yup.mixed<DateValue>().required(),
-    endDate: Yup.mixed<DateValue>().required(),
-    isPublish: Yup.boolean().required(),
-    isFeatured: Yup.boolean().required(),
-    description: Yup.string().required(),
+    name: Yup.string().required("please input name"),
+    slug: Yup.string().required("please input slug"),
+    category: Yup.string().required("please input category"),
+    startDate: Yup.mixed<DateValue>().required("please input start date"),
+    endDate: Yup.mixed<DateValue>().required("please input end date"),
+    isPublish: Yup.string().required("please input status"),
+    isFeatured: Yup.string().required("please input featured"),
+    description: Yup.string().required("please input description"),
 })
-
 
 const useInfoTab = () => {
     const {
@@ -32,8 +31,8 @@ const useInfoTab = () => {
             category: "",
             startDate: undefined,
             endDate: undefined,
-            isPublish: false,
-            isFeatured: false,
+            isPublish: "",
+            isFeatured: "",
             description: "",
         }
     })

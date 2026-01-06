@@ -65,91 +65,88 @@ const LocationTab = (props: ILocationTypes) => {
                 <p className="w-full text-small text-default-400">Manage information of this event</p>
             </CardHeader>
             <CardBody>
-                    <form className="flex flex-col gap-4" onSubmit={handleSubmitUpdateLocation(onUpdate)}>
-                        <Skeleton isLoaded={dataEvent?.isOnline !== undefined} className="rounded-lg">
-                            <Controller
-                                name="isOnline"
-                                control={controlUpdateLocation}
-                                render={({ field }) => (
-                                    <Select
-                                        label="Featured"
-                                        labelPlacement="outside"
-                                        variant="bordered"
-                                        disallowEmptySelection
-                                        selectedKeys={new Set([field.value])}
-                                        isInvalid={!!errorsUpdateLocation.isOnline}
-                                        errorMessage={errorsUpdateLocation.isOnline?.message}
-                                        onSelectionChange={(keys) => {
-                                            field.onChange(keys.currentKey)
-                                        }}
-                                    >
-                                        <SelectItem key="true">Online</SelectItem>
-                                        <SelectItem key="false">Offline</SelectItem>
-                                    </Select>
-                                )}
-                            />
-                        </Skeleton>
-                        <Skeleton isLoaded={!!dataEvent?.location?.coordinates} className="rounded-lg">
-                            <Controller name="latitude" control={controlUpdateLocation} render={({ field }) => (
-                                <Input
+                <form className="flex flex-col gap-4" onSubmit={handleSubmitUpdateLocation(onUpdate)}>
+                    <Skeleton isLoaded={dataEvent?.isOnline !== undefined} className="rounded-lg">
+                        <Controller
+                            name="isOnline"
+                            control={controlUpdateLocation}
+                            render={({ field }) => (
+                                <Select
                                     {...field}
-                                    label="Latitude"
-                                    variant="bordered"
+                                    label="Online/Offline"
                                     labelPlacement="outside"
-                                    placeholder="Please Input latitude For Event"
-                                    defaultValue={dataEvent?.location?.coordinates?.[0]?.toString()}
-                                    isInvalid={errorsUpdateLocation.latitude !== undefined}
-                                    errorMessage={errorsUpdateLocation.latitude?.message}
-                                />
-                            )} />
-                        </Skeleton>
-                        <Skeleton isLoaded={!!dataEvent.location?.region && !isPendingUpdateRegion} className="rounded-lg">
-                            <Controller name="longitude" control={controlUpdateLocation} render={({ field }) => (
-                                <Input
-                                    {...field}
-                                    label="Longitude"
                                     variant="bordered"
-                                    labelPlacement="outside"
-                                    placeholder="Please Input longitude For Event"
-                                    defaultValue={dataEvent?.location?.coordinates?.[1]?.toString()}
-                                    isInvalid={errorsUpdateLocation.longitude !== undefined}
-                                    errorMessage={errorsUpdateLocation.longitude?.message}
-                                />
-                            )} />
-                        </Skeleton>
-                        <Skeleton isLoaded={!!dataEvent.location?.region && !isPendingUpdateRegion} className="rounded-lg">
-                            <Controller
-                                name="region"
-                                control={controlUpdateLocation}
-                                render={({ field }) => (
-                                    <Autocomplete
-                                        selectedKey={field.value ? field.value.toString() : null}
-                                        items={dataRegion?.data.data ?? []}
-                                        label="City"
-                                        placeholder="Search city here..."
-                                        variant="bordered"
-                                        onInputChange={handleSearchRegion}
-                                        isInvalid={!!errorsUpdateLocation.region}
-                                        errorMessage={errorsUpdateLocation.region?.message}
-                                        onSelectionChange={(key) => {
-                                            if (key) field.onChange(Number(key))
-                                        }}
-                                    >
-                                        {(regency: IRegency) => (
-                                            <AutocompleteItem key={regency.id.toString()}>
-                                                {regency.name}
-                                            </AutocompleteItem>
-                                        )}
-                                    </Autocomplete>
-                                )}
+                                    disallowEmptySelection
+                                    isInvalid={errorsUpdateLocation.isOnline !== undefined}
+                                    errorMessage={errorsUpdateLocation.isOnline?.message}
+                                    defaultSelectedKeys={[dataEvent?.isOnline ? "true" : "false"]}>
+                                    <SelectItem key="true" textValue="Online">Online</SelectItem>
+                                    <SelectItem key="false" textValue="Offline">Offline</SelectItem>
+                                </Select>
+                            )}
+                        />
+                    </Skeleton>
+                    <Skeleton isLoaded={!!dataEvent?.location?.coordinates} className="rounded-lg">
+                        <Controller name="latitude" control={controlUpdateLocation} render={({ field }) => (
+                            <Input
+                                {...field}
+                                label="Latitude"
+                                variant="bordered"
+                                labelPlacement="outside"
+                                placeholder="Please Input latitude For Event"
+                                defaultValue={dataEvent?.location?.coordinates?.[0]?.toString()}
+                                isInvalid={errorsUpdateLocation.latitude !== undefined}
+                                errorMessage={errorsUpdateLocation.latitude?.message}
                             />
-                        </Skeleton>
-                        <Button color="danger" type="submit" className="disabled:bg-default-500 mt-2" disabled={isPendingUpdateEvent}>
-                            {isPendingUpdateEvent ? (
-                                <Spinner size="sm" color="white" />
-                            ) : "Save Changes"}
-                        </Button>
-                    </form>
+                        )} />
+                    </Skeleton>
+                    <Skeleton isLoaded={!!dataEvent.location?.region && !isPendingUpdateRegion} className="rounded-lg">
+                        <Controller name="longitude" control={controlUpdateLocation} render={({ field }) => (
+                            <Input
+                                {...field}
+                                label="Longitude"
+                                variant="bordered"
+                                labelPlacement="outside"
+                                placeholder="Please Input longitude For Event"
+                                defaultValue={dataEvent?.location?.coordinates?.[1]?.toString()}
+                                isInvalid={errorsUpdateLocation.longitude !== undefined}
+                                errorMessage={errorsUpdateLocation.longitude?.message}
+                            />
+                        )} />
+                    </Skeleton>
+                    <Skeleton isLoaded={!!dataEvent.location?.region && !isPendingUpdateRegion} className="rounded-lg">
+                        <Controller
+                            name="region"
+                            control={controlUpdateLocation}
+                            render={({ field }) => (
+                                <Autocomplete
+                                    selectedKey={field.value ? field.value.toString() : null}
+                                    items={dataRegion?.data.data ?? []}
+                                    label="City"
+                                    placeholder="Search city here..."
+                                    variant="bordered"
+                                    onInputChange={handleSearchRegion}
+                                    isInvalid={!!errorsUpdateLocation.region}
+                                    errorMessage={errorsUpdateLocation.region?.message}
+                                    onSelectionChange={(key) => {
+                                        if (key) field.onChange(Number(key))
+                                    }}
+                                >
+                                    {(regency: IRegency) => (
+                                        <AutocompleteItem key={regency.id.toString()}>
+                                            {regency.name}
+                                        </AutocompleteItem>
+                                    )}
+                                </Autocomplete>
+                            )}
+                        />
+                    </Skeleton>
+                    <Button color="danger" type="submit" className="disabled:bg-default-500 mt-2" disabled={isPendingUpdateEvent}>
+                        {isPendingUpdateEvent ? (
+                            <Spinner size="sm" color="white" />
+                        ) : "Save Changes"}
+                    </Button>
+                </form>
             </CardBody>
         </Card>
     )

@@ -38,8 +38,8 @@ const InfoTab = (props: IInfoTypes) => {
             setValueUpdateInformation("category", `${dataEvent.category}`)
             setValueUpdateInformation("startDate", toInputDate(`${dataEvent?.startDate}`))
             setValueUpdateInformation("endDate", toInputDate(`${dataEvent?.endDate}`))
-            setValueUpdateInformation("isPublish", dataEvent.isPublish ?? false)
-            setValueUpdateInformation("isFeatured", dataEvent.isFeatured ?? false)
+            setValueUpdateInformation("isPublish", `${dataEvent.isPublish}`)
+            setValueUpdateInformation("isFeatured", `${dataEvent.isFeatured}`)
             setValueUpdateInformation("description", `${dataEvent.description}`)
         }
     }, [dataEvent])
@@ -142,18 +142,16 @@ const InfoTab = (props: IInfoTypes) => {
                             control={controlUpdateInformation}
                             render={({ field }) => (
                                 <Select
+                                    {...field}
                                     label="Status"
                                     labelPlacement="outside"
                                     variant="bordered"
                                     disallowEmptySelection
-                                    selectedKeys={new Set([String(field.value)])}
                                     isInvalid={errorsUpdateInformation.isPublish !== undefined}
                                     errorMessage={errorsUpdateInformation.isPublish?.message}
-                                    onSelectionChange={(keys) => {
-                                        field.onChange(keys.currentKey === "true")
-                                    }}>
-                                    <SelectItem key="true">Published</SelectItem>
-                                    <SelectItem key="false">Not Published</SelectItem>
+                                    defaultSelectedKeys={[dataEvent?.isPublish ? "true" : "false"]}>
+                                    <SelectItem key="true" textValue="Published">Published</SelectItem>
+                                    <SelectItem key="false" textValue="Not Published">Not Published</SelectItem>
                                 </Select>
                             )}
                         />
@@ -164,18 +162,16 @@ const InfoTab = (props: IInfoTypes) => {
                             control={controlUpdateInformation}
                             render={({ field }) => (
                                 <Select
+                                    {...field}
                                     label="Featured"
                                     labelPlacement="outside"
                                     variant="bordered"
                                     disallowEmptySelection
-                                    selectedKeys={new Set([String(field.value)])}
                                     isInvalid={errorsUpdateInformation.isFeatured !== undefined}
                                     errorMessage={errorsUpdateInformation.isFeatured?.message}
-                                    onSelectionChange={(keys) => {
-                                        field.onChange(keys.currentKey === "true")
-                                    }}>
-                                    <SelectItem key="true">Yes</SelectItem>
-                                    <SelectItem key="false">No</SelectItem>
+                                    selectedKeys={[dataEvent.isFeatured ? "true" : "false"]}>
+                                    <SelectItem key="true" textValue="Yes">Yes</SelectItem>
+                                    <SelectItem key="false" textValue="No">No</SelectItem>
                                 </Select>
                             )}
                         />

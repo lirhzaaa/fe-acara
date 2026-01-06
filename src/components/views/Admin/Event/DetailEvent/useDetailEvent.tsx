@@ -31,7 +31,6 @@ const useDetailEvent = () => {
         }
     })
 
-
     const getEventById = async (id: string) => {
         const { data } = await eventServices.getEventsById(id)
         return data.data
@@ -51,15 +50,16 @@ const useDetailEvent = () => {
     const handleUpdateEvent = (data: IEventForm) => {
         const payload = {
             ...data,
-            isFeatured: data.isFeatured !== undefined ? Boolean(data.isFeatured) : dataEvent.isFeatured,
-            isPublish: data.isPublish !== undefined ? Boolean(data.isPublish) : dataEvent.isPublish,
+            isFeatured: data.isFeatured !== undefined ? data.isFeatured : dataEvent.isFeatured,
+            isPublish: data.isPublish !== undefined ? data.isPublish : dataEvent.isPublish,
+            isOnline: data.isOnline !== undefined ? data.isOnline : dataEvent.isOnline,
             startDate: data.startDate ? toDateStandard(data.startDate) : dataEvent.startDate,
             endDate: data.endDate ? toDateStandard(data.endDate) : dataEvent.endDate,
             location: {
                 region: data.region || dataEvent.location.region,
                 coordinates: [
-                    data.latitude ? Number(data.latitude) : dataEvent.location.coordinates[0],
-                    data.longitude ? Number(data.longitude) : dataEvent.location.coordinates[1],
+                    data.latitude ? data.latitude : dataEvent.location.coordinates[0],
+                    data.longitude ? data.longitude : dataEvent.location.coordinates[1],
                 ]
             },
 

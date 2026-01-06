@@ -11,9 +11,9 @@ interface IEvent {
   slug?: string;
   category?: string;
   description?: string;
-  isFeatured?: boolean;
-  isOnline?: boolean;
-  isPublish?: boolean;
+  isFeatured?: boolean | string;
+  isOnline?: boolean | string;
+  isPublish?: boolean | string;
   startDate?: string;
   endDate?: string;
   location?: {

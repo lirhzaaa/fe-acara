@@ -1,7 +1,6 @@
 import { DELAY } from "@/constants/list.constatns"
 import useDebounce from "@/hooks/useDebounce"
 import eventServices from "@/services/event.service"
-import { IEventForm } from "@/types/Event"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
@@ -18,25 +17,21 @@ const schemaUpdateLocation = Yup.object().shape({
 const useLocationTab = () => {
     const debounce = useDebounce()
 
-    const form = useForm({
+    const {
+        control: controlUpdateLocation,
+        handleSubmit: handleSubmitUpdateLocation,
+        formState: { errors: errorsUpdateLocation },
+        reset: resetUpdateLocation,
+        setValue: setValueUpdateLocation
+    } = useForm({
         resolver: yupResolver(schemaUpdateLocation),
         defaultValues: {
             isOnline: "",
             latitude: "",
             longitude: "",
             region: undefined,
-        },
+        }
     })
-
-    const handleSubmitUpdateLocation = (
-        onValid: (data: IEventForm) => void
-    ) =>
-        form.handleSubmit((data) => {
-            onValid({
-                ...data,
-                isOnline: data.isOnline === "true",
-            })
-        })
 
     const [searchRegency, setSearchRegency] = useState<string>("")
 
@@ -56,11 +51,11 @@ const useLocationTab = () => {
         handleSearchRegion,
         searchRegency,
 
-        controlUpdateLocation: form.control,
+        controlUpdateLocation,
         handleSubmitUpdateLocation,
-        errorsUpdateLocation: form.formState.errors,
-        resetUpdateLocation: form.reset,
-        setValueUpdateLocation: form.setValue,
+        errorsUpdateLocation,
+        resetUpdateLocation,
+        setValueUpdateLocation,
     }
 }
 
