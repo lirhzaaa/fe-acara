@@ -26,6 +26,7 @@ const schema = Yup.object().shape({
     description: Yup.string().required("Please input description"),
     isOnline: Yup.string().required("Please select online or offline"),
     region: Yup.string().required("Please select region"),
+    address: Yup.string().required("Please input address"),
     latitude: Yup.string().required("Please input latitude coordinate"),
     longitude: Yup.string().required("Please input longitude coordinate"),
     banner: Yup.mixed<FileList | string>().required("Please input Banner")
@@ -121,14 +122,12 @@ const useAddEvent = () => {
     const handleAddEvent = (data: AddEventFormValues) => {
         const payload: IEvent = {
             ...data,
-            isFeatured: Boolean(data.isFeatured),
-            isPublish: Boolean(data.isPublish),
-            isOnline: Boolean(data.isOnline),
             startDate: data.startDate ? toDateStandard(data.startDate) : "",
             endDate: data.endDate ? toDateStandard(data.endDate) : "",
             location: {
-                region: data.region,
-                coordinates: [Number(data.latitude), Number(data.longitude)]
+                region: `${data.region}`,
+                coordinates: [Number(data.latitude), Number(data.longitude)],
+                address: `${data.address}`,
             },
             banner: data.banner
         }

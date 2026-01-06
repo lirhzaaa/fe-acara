@@ -41,6 +41,7 @@ const LocationTab = (props: ILocationTypes) => {
             setValueUpdateLocation("isOnline", `${dataEvent.isOnline}`)
             setValueUpdateLocation("latitude", dataEvent.location.coordinates?.[0]?.toString() ?? "")
             setValueUpdateLocation("longitude", dataEvent.location.coordinates?.[1]?.toString() ?? "")
+            setValueUpdateLocation("address", dataEvent.location.address ?? "")
             setValueUpdateLocation("region", Number(dataEvent?.location?.region))
         }
     }, [dataEvent]);
@@ -56,7 +57,6 @@ const LocationTab = (props: ILocationTypes) => {
             handleSearchRegion(dataDefaultRegion)
         }
     }, [dataEvent])
-
 
     return (
         <Card className="w-full lg:w-1/2 p-4">
@@ -111,6 +111,20 @@ const LocationTab = (props: ILocationTypes) => {
                                 defaultValue={dataEvent?.location?.coordinates?.[1]?.toString()}
                                 isInvalid={errorsUpdateLocation.longitude !== undefined}
                                 errorMessage={errorsUpdateLocation.longitude?.message}
+                            />
+                        )} />
+                    </Skeleton>
+                    <Skeleton isLoaded={!!dataEvent.location?.region && !isPendingUpdateRegion} className="rounded-lg">
+                        <Controller name="address" control={controlUpdateLocation} render={({ field }) => (
+                            <Input
+                                {...field}
+                                label="Address"
+                                variant="bordered"
+                                labelPlacement="outside"
+                                placeholder="Please Input address For Event"
+                                defaultValue={dataEvent?.location?.address}
+                                isInvalid={errorsUpdateLocation.address !== undefined}
+                                errorMessage={errorsUpdateLocation.address?.message}
                             />
                         )} />
                     </Skeleton>

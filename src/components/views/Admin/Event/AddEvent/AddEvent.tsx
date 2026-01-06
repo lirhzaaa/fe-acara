@@ -196,6 +196,9 @@ const AddEvent = (props: IAddEvent) => {
                       !== undefined}
                     errorMessage={errors.longitude?.message} />
                 )} />
+                <Controller name="address" control={control} render={({ field }) => (
+                  <Input {...field} label="Address" variant="bordered" isInvalid={errors.address !== undefined} errorMessage={errors.address?.message} />
+                )} />
               </div>
 
               <p className="text-sm font-bold">Cover</p>

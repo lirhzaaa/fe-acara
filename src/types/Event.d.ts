@@ -17,6 +17,7 @@ interface IEvent {
   startDate?: string;
   endDate?: string;
   location?: {
+    address?: string
     region?: string;
     coordinates?: number[];
   };
@@ -28,6 +29,7 @@ interface IEventForm extends IEvent {
   endDate?: DateValue;
   latitude?: string;
   longitude?: string;
+  address?: string
 }
 
 export type { IRegency, IEvent, IEventForm };

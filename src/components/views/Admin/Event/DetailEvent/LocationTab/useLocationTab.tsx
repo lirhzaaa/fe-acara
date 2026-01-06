@@ -11,6 +11,7 @@ const schemaUpdateLocation = Yup.object().shape({
     isOnline: Yup.string().required("Please select online/offline"),
     latitude: Yup.string().required("Please input latitude"),
     longitude: Yup.string().required("Please input longitude"),
+    address: Yup.string().required("Please input address"),
     region: Yup.number().required("Please select region"),
 })
 
@@ -29,6 +30,7 @@ const useLocationTab = () => {
             isOnline: "",
             latitude: "",
             longitude: "",
+            address: "",
             region: undefined,
         }
     })
