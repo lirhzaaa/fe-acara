@@ -3,6 +3,7 @@ import CoverTab from "./CoverTab"
 import useDetailEvent from "./useDetailEvent"
 import InfoTab from "./InfoTab"
 import LocationTab from "./LocationTab"
+import TicketTab from "./TicketTab"
 
 const DetailEvent = () => {
   const {
@@ -45,6 +46,11 @@ const DetailEvent = () => {
           isSuccessUpdateEvent={isSuccessMutateEvent}
         />
       </Tab>
+
+      <Tab key="ticket" title="Ticket">
+        <TicketTab />
+      </Tab>
+
     </Tabs>
   )
 }

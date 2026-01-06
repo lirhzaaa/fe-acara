@@ -31,14 +31,14 @@ const useDetailEvent = () => {
         }
     })
 
-    const getEventById = async (id: string) => {
-        const { data } = await eventServices.getEventsById(id)
+    const getEventById = async () => {
+        const { data } = await eventServices.getEventsById(`${query.id}`)
         return data.data
     }
 
     const { data: dataEvent, refetch: refetchEvent } = useQuery({
         queryKey: ["events"],
-        queryFn: () => getEventById(`${query.id}`),
+        queryFn: getEventById,
         enabled: isReady
     })
 

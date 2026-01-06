@@ -12,7 +12,9 @@ interface PropTypes {
     emptyContent: string
     totalPage: number
     isLoading?: boolean
-    onClickButtonTopContent: () => void
+    showBottom?: boolean
+    showTop?: boolean
+    onClickButtonTopContent?: () => void
     renderCell: (item: Record<string, unknown>, columnKey: Key) => ReactNode
 }
 const DataTable = (props: PropTypes) => {
@@ -24,7 +26,9 @@ const DataTable = (props: PropTypes) => {
         onClickButtonTopContent,
         totalPage,
         emptyContent,
-        isLoading } = props
+        isLoading,
+        showBottom = true,
+        showTop = true } = props
 
     const {
         currentLimit,
@@ -38,28 +42,36 @@ const DataTable = (props: PropTypes) => {
     const TopContent = useMemo(() => {
         return (
             <div className="flex flex-col-reverse items-start justify-between gap-y-4 lg:flex-row lg:items-center">
-                <Input aria-label="Search by name" isClearable className="w-full sm:max-w-[24%]" placeholder="Search by name" startContent={<CiSearch />} onChange={handleSearch} onClear={handleClearSearch} />
-                <Button color="danger" onPress={onClickButtonTopContent}>{buttonTopContent}</Button>
+                {showTop && (
+                    <>
+                        <Input aria-label="Search by name" isClearable className="w-full sm:max-w-[24%]" placeholder="Search by name" startContent={<CiSearch />} onChange={handleSearch} onClear={handleClearSearch} />
+                        <Button color="danger" onPress={onClickButtonTopContent}>{buttonTopContent}</Button>
+                    </>
+                )}
             </div>
         )
-    }, [handleSearch, handleClearSearch, onClickButtonTopContent, buttonTopContent])
+    }, [showTop, handleSearch, handleClearSearch, onClickButtonTopContent, buttonTopContent])
 
     const BottomContent = useMemo(() => {
         return (
             <div className="flex items-center justify-center lg:justify-between">
-                <Select className="hidden max-w-36 lg:block" size="md" selectedKeys={[`${currentLimit}`]} selectionMode="single" onChange={handleChangeLimit} startContent={<p className="text-small">Show:</p>} disallowEmptySelection>
-                    {LIMIT_LIST.map((item) => (
-                        <SelectItem key={item.value} textValue={item.label}>
-                            {item.label}
-                        </SelectItem>
-                    ))}
-                </Select>
-                {totalPage > 1 && (
-                    <Pagination isCompact showControls color="danger" page={Number(currentPage)} total={totalPage} onChange={handleChangePage} loop />
+                {showBottom && (
+                    <>
+                        <Select className="hidden max-w-36 lg:block" size="md" selectedKeys={[`${currentLimit}`]} selectionMode="single" onChange={handleChangeLimit} startContent={<p className="text-small">Show:</p>} disallowEmptySelection>
+                            {LIMIT_LIST.map((item) => (
+                                <SelectItem key={item.value} textValue={item.label}>
+                                    {item.label}
+                                </SelectItem>
+                            ))}
+                        </Select>
+                        {totalPage > 1 && (
+                            <Pagination isCompact showControls color="danger" page={Number(currentPage)} total={totalPage} onChange={handleChangePage} loop />
+                        )}
+                    </>
                 )}
             </div>
         )
-    }, [currentLimit, handleChangeLimit, currentPage, totalPage, handleChangePage])
+    }, [showBottom, currentLimit, handleChangeLimit, currentPage, totalPage, handleChangePage])
 
     return (
         <Table topContent={TopContent} topContentPlacement="outside" bottomContent={BottomContent} bottomContentPlacement="outside" classNames={{
