@@ -10,7 +10,7 @@ const useTicketTab = () => {
         return data.data
     }
 
-    const { data: dataTicket, refetch: refetchTicket, isPending: isPendingTicket, isRefetching: isRefetchingTicket} = useQuery({
+    const { data: dataTicket, refetch: refetchTicket, isPending: isPendingTicket, isRefetching: isRefetchingTicket } = useQuery({
         queryKey: ["Tickets"],
         queryFn: getTicketByEventId,
         enabled: isReady
@@ -20,7 +20,7 @@ const useTicketTab = () => {
         dataTicket,
         refetchTicket,
         isPendingTicket,
-        isRefetchingTicket
+        isRefetchingTicket,
     }
 }
 

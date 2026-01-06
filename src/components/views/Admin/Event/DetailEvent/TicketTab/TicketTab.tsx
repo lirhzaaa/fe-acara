@@ -2,22 +2,25 @@ import DropdownAction from "@/components/commons/DropdownAction"
 import DataTable from "@/components/ui/DataTable"
 import { converIDR } from "@/utils/currency"
 import { Button, Card, CardBody, CardHeader, useDisclosure } from "@heroui/react"
-import { Fragment, Key, ReactNode, useCallback } from "react"
+import { Fragment, Key, ReactNode, useCallback, useState } from "react"
 import { COLUMN_LIST_TICKET } from "./Ticket.constants"
 import useTicketTab from "./useTicketTab"
 import AddTicket from "./AddTicket"
+import DeleteTicket from "./DeleteTicket"
+import { ITicket } from "@/types/Ticket"
 
 const TicketTab = () => {
     const {
         dataTicket,
         refetchTicket,
         isPendingTicket,
-        isRefetchingTicket
-    } = useTicketTab()
+        isRefetchingTicket } = useTicketTab()
 
     const addTicketModal = useDisclosure()
     const updateTicketModal = useDisclosure()
     const deleteTicketModal = useDisclosure()
+
+    const [selectedDataTicket, setSelectedDataTicket] = useState<ITicket | null>(null)
 
     const renderCell = useCallback(
         (ticket: Record<string, unknown>, columnKey: Key) => {
@@ -32,9 +35,11 @@ const TicketTab = () => {
                             textButtonDelete="Delete Ticket"
                             onPressButtonDetail={() => {
                                 updateTicketModal.onOpen()
+                                // setSelectedDataTicket(ticket as ITicket)
                             }}
                             onPressButtonDelete={() => {
                                 deleteTicketModal.onOpen()
+                                setSelectedDataTicket(ticket as ITicket)
                             }}
                         />
                     )
@@ -70,6 +75,12 @@ const TicketTab = () => {
             </Card>
 
             <AddTicket {...addTicketModal} refetchTicket={refetchTicket} />
+            <DeleteTicket
+                {...deleteTicketModal}
+                selectedDataTicket={selectedDataTicket}
+                setSelectedDataTicket={setSelectedDataTicket}
+                refetchTicket={refetchTicket}
+            />
         </Fragment>
     )
 }

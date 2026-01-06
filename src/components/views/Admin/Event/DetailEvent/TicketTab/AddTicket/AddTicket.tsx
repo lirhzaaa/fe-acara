@@ -3,14 +3,14 @@ import useAddTicket from "./useAddTicket"
 import { useEffect } from "react"
 import { Controller } from "react-hook-form"
 
-interface IAddTicket {
+interface ITicket {
     isOpen: boolean
     onClose: () => void
     onOpenChange: () => void
     refetchTicket: () => void
 }
 
-const AddTicket = (props: IAddTicket) => {
+const AddTicket = (props: ITicket) => {
     const { isOpen, onClose, onOpenChange, refetchTicket } = props
     const {
         control,
