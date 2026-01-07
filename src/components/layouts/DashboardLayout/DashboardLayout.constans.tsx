@@ -8,12 +8,6 @@ const SIDEBAR_ADMIN = [
         icon: <CiGrid41 />
     },
     {
-        key: "settings",
-        label: "Settings",
-        href: "/admin/settings",
-        icon: <CiSettings />
-    },
-    {
         key: "event",
         label: "Event",
         href: "/admin/event",

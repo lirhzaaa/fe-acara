@@ -42,7 +42,7 @@ const LandingPageLayoutNavbar = () => {
                     <NavbarItem className="hidden lg:flex">
                         <Dropdown>
                             <DropdownTrigger>
-                                <Avatar src={dataProfile?.profilePicture} className="cursor-pointer" showFallback name={dataProfile?.fullname} />
+                                <Avatar src={dataProfile?.profilePicture} className="cursor-pointer" showFallback />
                             </DropdownTrigger>
                             <DropdownMenu>
                                 <DropdownItem key="admin" href="/admin/dashboard" className={cn({

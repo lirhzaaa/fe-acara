@@ -4,13 +4,21 @@ import "../styles/globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
 import AppShell from "@/components/commons/pageHead/AppShell";
+import { onErrorHandler } from "@/libs/axios/responseHandler";
 
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      retry: false
+      retry: false,
+      throwOnError(error) {
+        onErrorHandler(error)
+        return false
+      }
+    },
+    mutations: {
+      onError: onErrorHandler
     }
   }
 })

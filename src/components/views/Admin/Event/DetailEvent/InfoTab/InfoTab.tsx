@@ -169,7 +169,7 @@ const InfoTab = (props: IInfoTypes) => {
                                     disallowEmptySelection
                                     isInvalid={errorsUpdateInformation.isFeatured !== undefined}
                                     errorMessage={errorsUpdateInformation.isFeatured?.message}
-                                    selectedKeys={[dataEvent.isFeatured ? "true" : "false"]}>
+                                    defaultSelectedKeys={[dataEvent?.isFeatured ? "true" : "false"]}>
                                     <SelectItem key="true" textValue="Yes">Yes</SelectItem>
                                     <SelectItem key="false" textValue="No">No</SelectItem>
                                 </Select>

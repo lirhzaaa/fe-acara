@@ -90,16 +90,15 @@ const DataTable = (props: PropTypes) => {
                 items={data}
                 emptyContent={emptyContent}
                 isLoading={isLoading}
-                className={isLoading ? "blur-xs pointer-events-none" : ""}
                 loadingContent={
-                    <div className="flex h-full w-full items-center justify-center bg-foreground-700/30 backdrop-blur-xs">
+                    <div className={`flex h-full w-full items-center justify-center bg-foreground-700/30 ${isLoading ? "backdrop-blur-xs" : ""}`}>
                         <Spinner color="danger" />
                     </div>
                 }>
                 {(item) => (
-                    <TableRow key={item._id as Key} className={isLoading ? "blur-xs opacity-60" : ""}>
+                    <TableRow key={item._id as Key} className={`${isLoading ? "backdrop-blur-xs" : ""}`}>
                         {(columnKey) => (
-                            <TableCell className={isLoading ? "blur-xs" : ""}>
+                            <TableCell>
                                 {renderCell(item, columnKey)}
                             </TableCell>
                         )}

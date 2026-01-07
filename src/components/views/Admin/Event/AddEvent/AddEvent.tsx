@@ -130,7 +130,18 @@ const AddEvent = (props: IAddEvent) => {
                     <SelectItem key="false" textValue="No">No</SelectItem>
                   </Select>
                 )} />
+                <Controller name="description" control={control} render={({ field }) => (
+                  <Textarea
+                    {...field}
+                    label="Description"
+                    variant="bordered"
+                    isInvalid={errors.description !== undefined}
+                    errorMessage={errors.description?.message} />
+                )} />
+              </div>
 
+              <p className="text-sm font-bold">Location</p>
+              <div className="flex flex-col gap-4">
                 <Controller name="isOnline" control={control} render={({ field }) => (
                   <Select
                     {...field}
@@ -144,19 +155,6 @@ const AddEvent = (props: IAddEvent) => {
                     <SelectItem key="false" textValue="Offline">Offline</SelectItem>
                   </Select>
                 )} />
-
-                <Controller name="description" control={control} render={({ field }) => (
-                  <Textarea
-                    {...field}
-                    label="Description"
-                    variant="bordered"
-                    isInvalid={errors.description !== undefined}
-                    errorMessage={errors.description?.message} />
-                )} />
-              </div>
-
-              <p className="text-sm font-bold">Location</p>
-              <div className="flex flex-col gap-4">
                 <Controller name="region" control={control} render={({ field: { onChange, ...field } }) => (
                   <Autocomplete
                     {...field}
