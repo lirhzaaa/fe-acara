@@ -1,9 +1,13 @@
-import PageHead from "@/components/commons/pageHead";
+import LandingPageLayout from "@/components/layouts/LandingPageLayout";
+import Home from "@/components/views/Home";
 
-export default function Home() {
+const HomePage = () => {
   return (
-    <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-      <PageHead />
-    </main>
+    <LandingPageLayout title="ACARA | Home">
+      <Home />
+    </LandingPageLayout>
   );
 }
+
+
+export default HomePage
