@@ -8,6 +8,8 @@ import { COLUMN_LISTS_BANNER } from "./Banner.constants"
 import useBanner from "./useBanner"
 import useChangeUrl from "@/hooks/useChangeUrl"
 import AddBanner from "./AddBanner"
+import DeleteBanner from "./DeleteBanner"
+import { IBanner } from "@/types/Banner"
 
 const Banner = () => {
     const { push, isReady, query } = useRouter();
@@ -45,6 +47,7 @@ const Banner = () => {
                             textButtonDelete="Delete banner"
                             onPressButtonDetail={() => push(`/admin/banner/${banner._id}`)}
                             onPressButtonDelete={() => {
+                                setSelectedDataBanner(banner as unknown as IBanner)
                                 deleteBanner.onOpen()
                             }}
                         />
@@ -58,7 +61,7 @@ const Banner = () => {
                 default:
                     return cellValue as ReactNode;
             }
-        }, [push, deleteBanner]
+        }, [push, deleteBanner, setSelectedDataBanner]
     )
 
     return (
@@ -80,11 +83,11 @@ const Banner = () => {
                 {...addBanner}
                 refetchBanner={refetchBanner} />
             
-            {/* <Deletebanner
-                {...deletebanner}
-                selectedId={selectedId}
-                setSelectedId={setSelectedId}
-                refetchbanner={refetchbanner} /> */}
+            <DeleteBanner
+                {...deleteBanner}
+                selectedDataBanner={selectedDataBanner}
+                setSelectedDataBanner={setSelectedDataBanner}
+                refetchBanner={refetchBanner} />
         </section>
     )
 }
