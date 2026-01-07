@@ -1,6 +1,7 @@
 import PageHead from "@/components/commons/pageHead"
 import { ReactNode } from "react"
 import { Fragment } from "react/jsx-runtime"
+import LandingPageLayoutNavbar from "./LandingPageLayoutNavbar"
 
 interface PropsTypes {
     title: string
@@ -12,6 +13,7 @@ const LandingPageLayout = (props: PropsTypes) => {
     return (
         <Fragment>
             <PageHead title={title} />
+            <LandingPageLayoutNavbar />
             <div className="max-w-screen-3xl 3xl:container py-10 md:p-6">
                 {children}
             </div>
