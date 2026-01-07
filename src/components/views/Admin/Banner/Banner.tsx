@@ -7,6 +7,7 @@ import { Key, ReactNode, useCallback, useEffect } from "react"
 import { COLUMN_LISTS_BANNER } from "./Banner.constants"
 import useBanner from "./useBanner"
 import useChangeUrl from "@/hooks/useChangeUrl"
+import AddBanner from "./AddBanner"
 
 const Banner = () => {
     const { push, isReady, query } = useRouter();
@@ -48,7 +49,7 @@ const Banner = () => {
                             }}
                         />
                     )
-                case "show":
+                case "isShow":
                     return (
                         <Chip color={cellValue ? "success" : "warning"} size="sm" variant="flat">
                             {cellValue === true ? "Published" : "Not Published"}
@@ -75,10 +76,11 @@ const Banner = () => {
                 />
             )}
 
-            {/* <Addbanner
-                {...addbanner}
-                refetchbanner={refetchbanner} />
-            <Deletebanner
+            <AddBanner
+                {...addBanner}
+                refetchBanner={refetchBanner} />
+            
+            {/* <Deletebanner
                 {...deletebanner}
                 selectedId={selectedId}
                 setSelectedId={setSelectedId}

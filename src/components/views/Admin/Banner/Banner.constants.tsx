@@ -1,7 +1,7 @@
 const COLUMN_LISTS_BANNER = [
     { name: "IMAGE", uid: "image" },
     { name: "TITLE", uid: "title" },
-    { name: "SHOW", uid: "show" },
+    { name: "SHOW", uid: "isShow" },
     { name: "ACTIONS", uid: "actions" },
 ]
 
