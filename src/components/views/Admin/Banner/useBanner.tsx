@@ -1,12 +1,11 @@
 import useChangeUrl from "@/hooks/useChangeUrl";
 import bannerServices from "@/services/banner.service";
-import { IBanner } from "@/types/Banner";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
 const useBanner = () => {
-    const [selectedDataBanner, setSelectedDataBanner] = useState<IBanner | null>(null);
+    const [selectedId, setSelectedId] = useState<string>("");
     const router = useRouter();
     const { currentLimit, currentPage, currentSearch } = useChangeUrl();
 
@@ -37,8 +36,8 @@ const useBanner = () => {
         isRefetchingBanner,
         refetchBanner,
 
-        selectedDataBanner,
-        setSelectedDataBanner
+        selectedId,
+        setSelectedId
     };
 };
 

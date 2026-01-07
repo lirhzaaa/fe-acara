@@ -1,5 +1,4 @@
 import DropdownAction from "@/components/commons/DropdownAction"
-import DataTable from "@/components/ui/DataTable"
 import { Chip, useDisclosure } from "@heroui/react"
 import Image from "next/image"
 import { useRouter } from "next/router"
@@ -9,22 +8,22 @@ import useBanner from "./useBanner"
 import useChangeUrl from "@/hooks/useChangeUrl"
 import AddBanner from "./AddBanner"
 import DeleteBanner from "./DeleteBanner"
-import { IBanner } from "@/types/Banner"
+import DataTable from "@/components/ui/DataTable"
 
 const Banner = () => {
     const { push, isReady, query } = useRouter();
-    const addBanner = useDisclosure()
-    const deleteBanner = useDisclosure()
-    const { setURL } = useChangeUrl()
-
     const {
         dataBanner,
         isLoadingBanner,
         isRefetchingBanner,
         refetchBanner,
 
-        selectedDataBanner,
-        setSelectedDataBanner } = useBanner()
+        selectedId,
+        setSelectedId } = useBanner()
+
+    const addBanner = useDisclosure()
+    const deleteBanner = useDisclosure()
+    const { setURL } = useChangeUrl()
 
     useEffect(() => {
         if (isReady) {
@@ -47,7 +46,7 @@ const Banner = () => {
                             textButtonDelete="Delete banner"
                             onPressButtonDetail={() => push(`/admin/banner/${banner._id}`)}
                             onPressButtonDelete={() => {
-                                setSelectedDataBanner(banner as unknown as IBanner)
+                                setSelectedId(`${banner._id}`)
                                 deleteBanner.onOpen()
                             }}
                         />
@@ -57,18 +56,18 @@ const Banner = () => {
                         <Chip color={cellValue ? "success" : "warning"} size="sm" variant="flat">
                             {cellValue === true ? "Published" : "Not Published"}
                         </Chip>
-                        )
+                    )
                 default:
                     return cellValue as ReactNode;
             }
-        }, [push, deleteBanner, setSelectedDataBanner]
+        }, [push, deleteBanner, setSelectedId]
     )
 
     return (
         <section>
             {Object.keys(query).length > 0 && (
                 <DataTable
-                    buttonTopContent="Create banner"
+                    buttonTopContent="Create Banner"
                     renderCell={renderCell}
                     columns={COLUMN_LISTS_BANNER}
                     data={dataBanner?.data || []}
@@ -82,11 +81,11 @@ const Banner = () => {
             <AddBanner
                 {...addBanner}
                 refetchBanner={refetchBanner} />
-            
+
             <DeleteBanner
                 {...deleteBanner}
-                selectedDataBanner={selectedDataBanner}
-                setSelectedDataBanner={setSelectedDataBanner}
+                selectedId={selectedId}
+                setSelectedId={setSelectedId}
                 refetchBanner={refetchBanner} />
         </section>
     )

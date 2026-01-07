@@ -1,15 +1,14 @@
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Spinner } from "@heroui/react"
 import useDeleteBanner from "./useDeleteBanner"
 import { Dispatch, SetStateAction, useEffect } from "react"
-import { IBanner } from "@/types/Banner"
 
 interface IDeleteBanner {
     isOpen: boolean
     onClose: () => void
     onOpenChange: () => void
     refetchBanner: () => void
-    selectedDataBanner: IBanner | null,
-    setSelectedDataBanner: Dispatch<SetStateAction<IBanner | null>>
+    selectedId: string,
+    setSelectedId: Dispatch<SetStateAction<string>>
 }
 
 const DeleteBanner = (props: IDeleteBanner) => {
@@ -18,8 +17,8 @@ const DeleteBanner = (props: IDeleteBanner) => {
         onOpenChange,
         onClose,
         refetchBanner,
-        selectedDataBanner,
-        setSelectedDataBanner } = props
+        selectedId,
+        setSelectedId } = props
 
     const {
         mutateDeleteBanner,
@@ -31,9 +30,9 @@ const DeleteBanner = (props: IDeleteBanner) => {
         if (isSuccessDeleteBanner) {
             onClose()
             refetchBanner()
-            setSelectedDataBanner(null)
+            setSelectedId("")
         }
-    }, [isSuccessDeleteBanner, onClose, refetchBanner, setSelectedDataBanner])
+    }, [isSuccessDeleteBanner, onClose, refetchBanner, setSelectedId])
 
     return (
         <Modal placement="center" scrollBehavior="inside" isOpen={isOpen} onClose={onClose} onOpenChange={onOpenChange}>
@@ -46,12 +45,12 @@ const DeleteBanner = (props: IDeleteBanner) => {
                 </ModalBody>
                 <ModalFooter>
                     <Button color="danger" variant="flat" disabled={isPendingDeleteBanner} onPress={() => {
-                        setSelectedDataBanner(null)
+                        setSelectedId("")
                         onClose()
                     }}>
                         Cancel
                     </Button>
-                    <Button color="danger" type="submit" disabled={isPendingDeleteBanner} onPress={() => mutateDeleteBanner(`${selectedDataBanner?._id}`)}>
+                    <Button color="danger" type="submit" disabled={isPendingDeleteBanner} onPress={() => mutateDeleteBanner(selectedId)}>
                         {isPendingDeleteBanner ? (
                             <Spinner size="sm" color="white" />
                         ) : "Delete Banner"}
