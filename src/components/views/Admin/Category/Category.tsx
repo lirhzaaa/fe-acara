@@ -56,6 +56,7 @@ const Category = () => {
             }
         }, [push, setSelectedId, deleteCategory]
     )
+    
     return (
         <section>
             {Object.keys(query).length > 0 && (
