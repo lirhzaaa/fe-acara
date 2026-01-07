@@ -18,7 +18,7 @@ const DashboardLayout = (props: PropsTypes) => {
     return (
         <>
             <PageHead title={title} />
-            <div className="max-w-screen-3xl 3xl:container flex">
+            <div className="max-w-screen-2xl 2xl:container flex">
                 <DashboardLayoutSidebar sidebarItems={type === "admin" ? SIDEBAR_ADMIN : SIDEBAR_MEMBER} isOpen={open} />
                 <div className="h-screen w-full overflow-y-auto p-8">
                     <Navbar className="flex justify-between bg-transparent px-0" isBlurred={false} position="static" classNames={{ wrapper: "p-0" }}>
