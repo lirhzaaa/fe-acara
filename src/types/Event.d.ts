@@ -6,6 +6,7 @@ interface IRegency {
 }
 
 interface IEvent {
+  _id?: string
   banner?: string | FileList;
   name?: string;
   slug?: string;
