@@ -1,7 +1,15 @@
+import HomeSlider from "./HomeSlider"
+import useHome from "./useHome"
+
 const Home = () => {
+  const {
+    dataBanner,
+    isLoadingBanner,
+  } = useHome()
+
   return (
     <div>
-      <h1>Home Views</h1>
+      <HomeSlider banners={dataBanner?.data} isLoadingBanners={isLoadingBanner} />
     </div>
   )
 }
