@@ -1,6 +1,5 @@
-import { Avatar, Button, ButtonProps, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from "@heroui/react"
+import { Avatar, Button, ButtonProps, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Link } from "@heroui/react"
 import Image from "next/image"
-import Link from "next/link"
 import { BUTTON_ITEMS, NAV_ITEMS } from "../LandingPageLayout.constansts"
 import { cn } from "@/utils/cn"
 import { useRouter } from "next/router"
@@ -73,26 +72,25 @@ const LandingPageLayoutNavbar = () => {
 
                 <NavbarMenu className="gap-4">
                     {NAV_ITEMS.map((items) => (
-                        <NavbarMenuItem key={`nav-${items.label}`}
-                            className={cn("font-medium text-default-700 hover:text-danger", {
+                        <NavbarMenuItem key={`nav-${items.label}`}>
+                            <Link href={items.href} className={cn("font-medium text-default-700 hover:text-danger", {
                                 "font-bold text-danger-500": router.pathname === items.href
                             })}>
-                            <Link href={items.href}>
                                 {items.label}
                             </Link>
                         </NavbarMenuItem>
                     ))}
                     {session.status === "authenticated" ? (
                         <Fragment>
-                            <NavbarMenuItem className={cn("font-medium text-default-700 hover:text-danger", {
-                                "hidden": dataProfile?.role !== "admin"
-                            })}>
-                                <Link href="/admin/dashboard">
+                            <NavbarMenuItem>
+                                <Link href="/admin/dashboard" className={cn("font-medium text-default-700 hover:text-danger", {
+                                    "hidden": dataProfile?.role !== "admin"
+                                })}>
                                     Admin
                                 </Link>
                             </NavbarMenuItem>
-                            <NavbarMenuItem className="font-medium text-default-700 hover:text-danger">
-                                <Link href="/member/profile">
+                            <NavbarMenuItem>
+                                <Link href="/member/profile" className="font-medium text-default-700 hover:text-danger">
                                     Profile
                                 </Link>
                             </NavbarMenuItem>

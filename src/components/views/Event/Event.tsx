@@ -6,6 +6,7 @@ import { useRouter } from "next/router"
 import useChangeUrl from "@/hooks/useChangeUrl"
 import EventFooter from "./EventFooter"
 import EventFilter from "./EventFilter"
+import Image from "next/image"
 
 const Event = () => {
     const router = useRouter()
@@ -41,6 +42,13 @@ const Event = () => {
                 </div>
                 {!isLoadingEvent && dataEvent?.data?.length > 0 && (
                     <EventFooter totalPages={dataEvent?.pagination?.totalPages} />
+                )}
+
+                {dataEvent?.data.length < 1 && !isLoadingEvent && !isRefetchingEvent && (
+                    <div className="flex flex-col items-center justify-center gap-4 py-20">
+                        <Image src="/images/illustration/no-data.svg" alt="Image No Data" width={200} height={200} />
+                        <h2 className="text-center text-2xl font-bold text-danger">Event is empty</h2>
+                    </div>
                 )}
             </div>
         </div>

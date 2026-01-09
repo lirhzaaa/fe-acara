@@ -26,8 +26,6 @@ const EventFilter = () => {
         }
     }, [isSuccessGetCategory, isSuccessGetEvent])
 
-    console.log(dataEvent?.data)
-
     return (
         <div className="lg:sticky top-20 h-fit w-full rounded-xl shadow p-4 lg:w-80">
             <h4 className="text-xl font-semibold">Filter</h4>
