@@ -24,7 +24,7 @@ const Home = () => {
     <div>
       <HomeSlider banners={dataBanner?.data} isLoadingBanners={isLoadingBanner} />
       <HomeEvent title="Featured Event" events={dataFeaturedEvent?.data} isLoading={isLoadingFeaturedEvent} />
-      <Skeleton isLoaded={!isLoadingBanner} className="mb-16 h-[20vw] w-full rounded-2xl">
+      <Skeleton isLoaded={!isLoadingBanner} className="mb-16 h-[20vw] w-full px-6 lg:px-0 rounded-2xl">
         <Image src={dataBanner && dataBanner?.data[0]?.image} alt="Banner" className="h-[20vw] w-full rounded-2xl" width={1920} height={800} />
       </Skeleton>
       <HomeEvent title="Lates Event" events={dataLatestEvent?.data} isLoading={isLoadingLatestEvent} />
