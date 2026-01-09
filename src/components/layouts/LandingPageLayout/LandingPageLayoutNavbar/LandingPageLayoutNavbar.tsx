@@ -1,4 +1,4 @@
-import { Avatar, Button, ButtonProps, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Link } from "@heroui/react"
+import { Avatar, Button, ButtonProps, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Link, Listbox, ListboxItem, Spinner } from "@heroui/react"
 import Image from "next/image"
 import { BUTTON_ITEMS, NAV_ITEMS } from "../LandingPageLayout.constansts"
 import { cn } from "@/utils/cn"
@@ -7,17 +7,25 @@ import { CiSearch } from "react-icons/ci"
 import { signOut, useSession } from "next-auth/react"
 import useLandingPageLayoutNavbar from "./useLandingPageLayoutNavbar"
 import { Fragment } from "react/jsx-runtime"
+import { IEvent } from "@/types/Event"
 
 const LandingPageLayoutNavbar = () => {
     const router = useRouter()
     const session = useSession()
 
-    const { dataProfile } = useLandingPageLayoutNavbar()
+    const {
+        dataProfile,
+        dataEventSearch,
+        search,
+        setSearch,
 
-    console.log(dataProfile)
+        handleSearch,
+        isLoadingEventSearch,
+        isRefetchingEventSearch
+    } = useLandingPageLayoutNavbar()
 
     return (
-        <Navbar maxWidth="full" isBordered isBlurred={false} shouldHideOnScroll>
+        <Navbar maxWidth="full" isBordered isBlurred={false}>
             <div className="flex items-center gap-8">
                 <NavbarBrand as={Link} href="/">
                     <Image src="/images/general/logo.svg" alt="Logo Acara" width={100} height={50} className="cursor-pointer" />
@@ -35,7 +43,25 @@ const LandingPageLayoutNavbar = () => {
             <NavbarContent justify="end">
                 <NavbarMenuToggle className="lg:hidden" />
                 <NavbarItem className="hidden lg:flex lg:relative">
-                    <Input isClearable className="w-[300px]" placeholder="Search Event" startContent={<CiSearch />} onClear={() => { }} onChange={() => { }} />
+                    <Input className="w-75" placeholder="Search Event" startContent={<CiSearch />} onChange={handleSearch} onClear={() => setSearch("")} isClearable />
+                    {search !== "" && (
+                        <Listbox items={dataEventSearch?.data || []} className="absolute right-0 top-12 rounded-xl shadow-2xl shadow-gray-700 bg-white">
+                            {!isRefetchingEventSearch && !isLoadingEventSearch ? (
+                                (item: IEvent) => (
+                                    <ListboxItem key={`${item._id}`} href={`/event/${item.slug}`}>
+                                        <div className="flex items-center gap-2">
+                                            <Image src={`${item.banner}`} alt={`${item.name}`} className="w-2/5 rounded-md" width={100} height={100} />
+                                            <p className="w-3/5 text-wrap">{`${item.name}`}</p>
+                                        </div>
+                                    </ListboxItem>
+                                )
+                            ) : (
+                                <ListboxItem key="loading">
+                                    <Spinner color="danger" size="sm" />
+                                </ListboxItem>
+                            )}
+                        </Listbox>
+                    )}
                 </NavbarItem>
                 {session.status === "authenticated" ? (
                     <NavbarItem className="hidden lg:flex">

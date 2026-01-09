@@ -6,7 +6,7 @@ interface propTypes {
     title: string
     events: IEvent[]
     isLoading: boolean
-    urlMore: string
+    urlMore?: string
 }
 
 const HomeList = (props: propTypes) => {
