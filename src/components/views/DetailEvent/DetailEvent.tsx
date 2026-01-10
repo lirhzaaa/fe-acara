@@ -6,6 +6,8 @@ import Image from "next/image"
 import { ITicket } from "@/types/Ticket"
 import DetailTicket from "./DetailTicket"
 import DetailCart from "./DetailCart"
+import Script from "next/script"
+import { environment } from "@/config/environment"
 
 const DetailEvent = () => {
   const {
@@ -18,13 +20,17 @@ const DetailEvent = () => {
     cart,
     dataTicketInCart,
     handleAddToCart,
-    handleChangeQuantity
+    handleChangeQuantity,
+
+    mutateCreateOrder,
+    isPendingCreateOrder
   } = useDetailEvent()
 
   console.log(dataDetailEvent)
 
   return (
     <div className="px-8 md:px-0">
+      <Script src={environment.MIDTRANS_SNAP_URL} data-client-key={environment.MIDTRANS_CLIENT_KEY} strategy="lazyOnload" />
       <Skeleton isLoaded={!!dataDetailEvent?.name} className="h-5 full">
         <Breadcrumbs>
           <BreadcrumbItem href="/">Home</BreadcrumbItem>
@@ -85,7 +91,12 @@ const DetailEvent = () => {
           </div>
         </div>
         <div className="w-full lg:w-2/6">
-          <DetailCart cart={cart} dataTicketInCart={dataTicketInCart} onChangeQuantity={handleChangeQuantity} />
+          <DetailCart
+            cart={cart}
+            dataTicketInCart={dataTicketInCart}
+            onChangeQuantity={handleChangeQuantity}
+            onCreateOrder={mutateCreateOrder}
+            isLoading={isPendingCreateOrder} />
         </div>
       </section>
     </div>
