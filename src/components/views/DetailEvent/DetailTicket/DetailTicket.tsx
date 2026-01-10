@@ -1,4 +1,4 @@
-import { ITicket } from "@/types/Ticket"
+import { ICart, ITicket } from "@/types/Ticket"
 import { converIDR } from "@/utils/currency"
 import { Accordion, AccordionItem, Button, Card, Chip } from "@heroui/react"
 import { useSession } from "next-auth/react"
@@ -7,10 +7,12 @@ import Link from "next/link"
 interface propsTypes {
     key?: string
     ticket: ITicket
+    cart: ICart
+    handleAddToCart: () => void
 }
 
 const DetailTicket = (props: propsTypes) => {
-    const { key, ticket } = props
+    const { key, ticket, cart, handleAddToCart } = props
     const session = useSession()
 
     return (
@@ -34,7 +36,14 @@ const DetailTicket = (props: propsTypes) => {
             <div className="flex items-center justify-between p-2">
                 <h2 className="text-xl font-semibold text-foreground-700">{converIDR(Number(ticket?.price))}</h2>
                 {session.status === "authenticated" && Number(ticket.quantity) > 0 ? (
-                    <Button size="md" color="warning" variant="bordered" className="font-bold text-warning disabled:opacity-20 disabled:text-foreground-500" >
+                    <Button
+                        size="md"
+                        color="warning"
+                        variant="bordered"
+                        className="font-bold text-warning disabled:opacity-20"
+                        disabled={cart?.ticket === ticket._id}
+                        onPress={handleAddToCart}
+                    >
                         Add To Cart
                     </Button>
                 ) : (

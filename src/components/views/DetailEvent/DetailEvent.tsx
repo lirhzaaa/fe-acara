@@ -5,6 +5,7 @@ import { converTime } from "@/utils/date"
 import Image from "next/image"
 import { ITicket } from "@/types/Ticket"
 import DetailTicket from "./DetailTicket"
+import DetailCart from "./DetailCart"
 
 const DetailEvent = () => {
   const {
@@ -12,14 +13,19 @@ const DetailEvent = () => {
     dataTicket,
 
     isLoadingDetailEvent,
-    isLoadingTicket
+    isLoadingTicket,
+
+    cart,
+    dataTicketInCart,
+    handleAddToCart,
+    handleChangeQuantity
   } = useDetailEvent()
 
   console.log(dataDetailEvent)
 
   return (
     <div className="px-8 md:px-0">
-      <Skeleton isLoaded={!!dataDetailEvent?.name} className="h-5 w-1/4">
+      <Skeleton isLoaded={!!dataDetailEvent?.name} className="h-5 full">
         <Breadcrumbs>
           <BreadcrumbItem href="/">Home</BreadcrumbItem>
           <BreadcrumbItem href="/event">Event</BreadcrumbItem>
@@ -67,11 +73,19 @@ const DetailEvent = () => {
                   <h2 className="text-xl font-semibold text-foreground-700">Ticket</h2>
                 </Skeleton>
                 <div className="flex flex-col gap-8">
-                  {dataTicket?.map((ticket: ITicket) => <DetailTicket key={`${ticket._id}`} ticket={ticket} /> )}
+                  {dataTicket?.map((ticket: ITicket) => <DetailTicket
+                    key={`${ticket._id}`}
+                    ticket={ticket}
+                    cart={cart}
+                    handleAddToCart={() => handleAddToCart(`${ticket._id}`)}
+                  />)}
                 </div>
               </Tab>
             </Tabs>
           </div>
+        </div>
+        <div className="w-full lg:w-2/6">
+          <DetailCart cart={cart} dataTicketInCart={dataTicketInCart} onChangeQuantity={handleChangeQuantity} />
         </div>
       </section>
     </div>

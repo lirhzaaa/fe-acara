@@ -7,4 +7,10 @@ interface ITicket {
     events?: string
 }
 
-export {ITicket}
+interface ICart {
+    events: string
+    ticket: string
+    quantity: number
+}
+
+export {ITicket, ICart}
