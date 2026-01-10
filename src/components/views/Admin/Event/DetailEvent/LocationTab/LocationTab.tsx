@@ -41,7 +41,7 @@ const LocationTab = (props: ILocationTypes) => {
             setValueUpdateLocation("isOnline", `${dataEvent.isOnline}`)
             setValueUpdateLocation("latitude", dataEvent.location.coordinates?.[0]?.toString() ?? "")
             setValueUpdateLocation("longitude", dataEvent.location.coordinates?.[1]?.toString() ?? "")
-            setValueUpdateLocation("address", dataEvent.location.address ?? "")
+            setValueUpdateLocation("address", `${dataEvent.location.address}`)
             setValueUpdateLocation("region", Number(dataEvent?.location?.region))
         }
     }, [dataEvent]);
@@ -100,7 +100,7 @@ const LocationTab = (props: ILocationTypes) => {
                             />
                         )} />
                     </Skeleton>
-                    <Skeleton isLoaded={!!dataEvent.location?.region && !isPendingUpdateRegion} className="rounded-lg">
+                    <Skeleton isLoaded={!!dataEvent?.location?.coordinates} className="rounded-lg">
                         <Controller name="longitude" control={controlUpdateLocation} render={({ field }) => (
                             <Input
                                 {...field}
@@ -114,7 +114,7 @@ const LocationTab = (props: ILocationTypes) => {
                             />
                         )} />
                     </Skeleton>
-                    <Skeleton isLoaded={!!dataEvent.location?.region && !isPendingUpdateRegion} className="rounded-lg">
+                    <Skeleton isLoaded={dataEvent?.location !== undefined} className="rounded-lg">
                         <Controller name="address" control={controlUpdateLocation} render={({ field }) => (
                             <Input
                                 {...field}
