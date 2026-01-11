@@ -1,7 +1,7 @@
 import { ToastProvider } from "@heroui/react";
 import { cn } from "@/utils/cn"
 import { Inter } from "next/font/google"
-import { ReactNode } from "react"
+import { Fragment, ReactNode } from "react"
 
 interface PropTypes {
     children: ReactNode
@@ -16,12 +16,12 @@ const inter = Inter({
 const AppShell = (props: PropTypes) => {
     const { children } = props
     return (
-        <>
+        <Fragment>
             <ToastProvider />
             <main className={cn(inter.className)}>
                 {children}
             </main>
-        </>
+        </Fragment>
     )
 }
 

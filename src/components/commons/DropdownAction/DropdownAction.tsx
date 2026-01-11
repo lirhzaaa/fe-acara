@@ -3,9 +3,10 @@ import { CiMenuKebab } from "react-icons/ci"
 
 interface DropdownTypes {
     textButtonDetail: string
-    textButtonDelete: string
+    textButtonDelete?: string
     onPressButtonDetail: () => void
-    onPressButtonDelete: () => void
+    onPressButtonDelete?: () => void
+    hideButtonDelete?: boolean
 }
 
 const DropdownAction = (props: DropdownTypes) => {
@@ -13,7 +14,8 @@ const DropdownAction = (props: DropdownTypes) => {
         textButtonDetail,
         textButtonDelete,
         onPressButtonDetail,
-        onPressButtonDelete
+        onPressButtonDelete,
+        hideButtonDelete = false
     } = props
 
     return (
@@ -27,9 +29,11 @@ const DropdownAction = (props: DropdownTypes) => {
                 <DropdownItem key="detail" onPress={onPressButtonDetail}>
                     {textButtonDetail}
                 </DropdownItem>
-                <DropdownItem key="delete" onPress={onPressButtonDelete} className="text-danger-500">
-                    {textButtonDelete}
-                </DropdownItem>
+                {!hideButtonDelete ? (
+                    <DropdownItem key="delete" onPress={onPressButtonDelete} className="text-danger-500">
+                        {textButtonDelete}
+                    </DropdownItem>
+                ) : null}
             </DropdownMenu>
         </Dropdown>
     )

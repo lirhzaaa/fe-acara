@@ -2,11 +2,11 @@ import { LIMIT_LIST } from "@/constants/list.constatns"
 import useChangeUrl from "@/hooks/useChangeUrl"
 import { cn } from "@/utils/cn"
 import { Button, Input, Pagination, Select, SelectItem, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react"
-import { Key, ReactNode, useMemo } from "react"
+import { Fragment, Key, ReactNode, useMemo } from "react"
 import { CiSearch } from "react-icons/ci"
 
 interface PropTypes {
-    buttonTopContent: string
+    buttonTopContent?: string
     columns: Record<string, unknown>[]
     data: Record<string, unknown>[]
     emptyContent: string
@@ -43,10 +43,12 @@ const DataTable = (props: PropTypes) => {
         return (
             <div className="flex flex-col-reverse items-start justify-between gap-y-4 lg:flex-row lg:items-center">
                 {showTop && (
-                    <>
+                    <Fragment>
                         <Input aria-label="Search by name" isClearable className="w-full sm:max-w-[24%]" placeholder="Search by name" startContent={<CiSearch />} onChange={handleSearch} onClear={handleClearSearch} />
-                        <Button color="danger" onPress={onClickButtonTopContent}>{buttonTopContent}</Button>
-                    </>
+                        {buttonTopContent && (
+                            <Button color="danger" onPress={onClickButtonTopContent}>{buttonTopContent}</Button>
+                        )}
+                    </Fragment>
                 )}
             </div>
         )
@@ -56,7 +58,7 @@ const DataTable = (props: PropTypes) => {
         return (
             <div className="flex items-center justify-center lg:justify-between">
                 {showBottom && (
-                    <>
+                    <Fragment>
                         <Select className="hidden max-w-36 lg:block" size="md" selectedKeys={[`${currentLimit}`]} selectionMode="single" onChange={handleChangeLimit} startContent={<p className="text-small">Show:</p>} disallowEmptySelection>
                             {LIMIT_LIST.map((item) => (
                                 <SelectItem key={item.value} textValue={item.label}>
@@ -67,7 +69,7 @@ const DataTable = (props: PropTypes) => {
                         {totalPage > 1 && (
                             <Pagination isCompact showControls color="danger" page={Number(currentPage)} total={totalPage} onChange={handleChangePage} loop />
                         )}
-                    </>
+                    </Fragment>
                 )}
             </div>
         )
