@@ -26,8 +26,6 @@ const DetailEvent = () => {
     isPendingCreateOrder
   } = useDetailEvent()
 
-  console.log(dataDetailEvent)
-
   return (
     <div className="px-8 md:px-0">
       <Script src={environment.MIDTRANS_SNAP_URL} data-client-key={environment.MIDTRANS_CLIENT_KEY} strategy="lazyOnload" />
@@ -83,7 +81,7 @@ const DetailEvent = () => {
                     key={`${ticket._id}`}
                     ticket={ticket}
                     cart={cart}
-                    handleAddToCart={() => handleAddToCart(`${ticket._id}`)}
+                    handleAddToCart={() => handleAddToCart(ticket)}
                   />)}
                 </div>
               </Tab>

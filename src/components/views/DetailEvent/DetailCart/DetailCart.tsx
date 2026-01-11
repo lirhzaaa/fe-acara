@@ -30,7 +30,7 @@ const DetailCart = (props: propTypes) => {
             {session.status === "authenticated" ? (
                 <CardBody className="gap-4">
                     <h2 className="text-xl font-semibold text-foreground-700">Cart</h2>
-                    {cart.ticket == "" ? (
+                    {`${cart.ticket}` == "" ? (
                         <p className="text-foreground-500 text-sm">Your cart is empty</p>
                     ) : (
                         <div className="flex items-center justify-between">
@@ -65,7 +65,7 @@ const DetailCart = (props: propTypes) => {
                         disabled={cart.quantity === 0 || isLoading}
                         className="disabled:bg-danger-200"
                         onPress={onCreateOrder}>
-                        {isLoading ? <Spinner color="white" /> : "Checkout"}
+                        {isLoading ? <Spinner size="md" color="white" /> : "Checkout"}
                     </Button>
                 </CardBody>
             ) : (

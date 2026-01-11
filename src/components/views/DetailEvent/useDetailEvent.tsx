@@ -45,7 +45,7 @@ const useDetailEvent = () => {
     const handleAddToCart = (ticket: ITicket) => {
         setCart({
             events: dataDetailEvent._id as string,
-            ticket,
+            ticket: ticket._id as string,
             quantity: 1
         })
     }
@@ -88,8 +88,17 @@ const useDetailEvent = () => {
             })
         },
         onSuccess: (result) => {
-            const transactionToken = result.payment.token;
-            window.snap.pay(transactionToken)
+            if (result.payment?.token) {
+                const transactionToken = result.payment.token;
+                window.snap.pay(transactionToken)
+            } else {
+                addToast({
+                    title: "Order Created",
+                    description: "Your order has been created successfully.",
+                    color: "success"
+                })
+                router.push('/orders')
+            }
         }
     })
 
