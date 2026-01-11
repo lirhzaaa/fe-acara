@@ -1,6 +1,5 @@
 import DropdownAction from "@/components/commons/DropdownAction"
-import { Chip, useDisclosure } from "@heroui/react"
-import Image from "next/image"
+import { Chip } from "@heroui/react"
 import { useRouter } from "next/router"
 import { Key, ReactNode, useCallback, useEffect } from "react"
 import { COLUMN_LISTS_TRANSACTION } from "./Transaction.constants"
@@ -42,7 +41,7 @@ const Transaction = () => {
                     return (
                         <DropdownAction
                             textButtonDetail="Detail Transaction"
-                            onPressButtonDetail={() => push(`/member/transaction/${transaction._id}`)}
+                            onPressButtonDetail={() => push(`/member/transaction/${transaction.orderId}`)}
                             hideButtonDelete
                         />
                     )

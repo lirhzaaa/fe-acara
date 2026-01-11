@@ -7,7 +7,7 @@ const eventServices = {
     instance.post(`${endpoint.EVENT}`, payload);
   },
   getEvents: (params?: string) => instance.get(`${endpoint.EVENT}?${params}`),
-  getEventsById: (id: string) => instance.get(`${endpoint.EVENT}/${id}`),
+  getEventById: (id: string) => instance.get(`${endpoint.EVENT}/${id}`),
   getEventsySlug: (slug: string) => instance.get(`${endpoint.EVENT}/${slug}/slug`),
   updateEvents: (id: string, payload: IEvent) =>
     instance.put(`${endpoint.EVENT}/${id}`, payload),

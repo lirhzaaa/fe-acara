@@ -1,3 +1,3 @@
-import DetailBanner from "./DetailBanner";
+import DetailTransaction from "./DetailTransaction";
 
-export default DetailBanner
+export default DetailTransaction
