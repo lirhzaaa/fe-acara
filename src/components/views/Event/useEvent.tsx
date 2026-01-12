@@ -8,21 +8,9 @@ const useEvent = () => {
     const {
         currentLimit,
         currentPage,
-        currentSearch,
         currentCategory,
         currentIsOnline,
         currentIsFeatured,
-
-        setURL,
-        setExplore,
-
-        handleChangePage,
-        handleChangeLimit,
-        handleSearch,
-        handleClearSearch,
-        handleChangeCategory,
-        handleChangeIsOnline,
-        handleChangeIsFeatured
     } = useChangeUrl()
 
     const getEvents = async () => {

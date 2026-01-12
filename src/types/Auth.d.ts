@@ -28,6 +28,13 @@ interface IProfile {
   role?: string
 }
 
+interface ISecurity {
+  _id?: string
+  oldPassword?: string
+  password?: string
+  confirmPassword?: string
+}
+
 interface UserExtended extends User {
   accessToken?: string;
   role?: string;
@@ -46,6 +53,7 @@ export type {
   IActivation,
   ILogin,
   IProfile,
+  ISecurity,
   UserExtended,
   SessionExtended,
   JWTExtended,
