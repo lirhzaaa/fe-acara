@@ -19,14 +19,14 @@ const useDetailTransaction = () => {
     })
 
     const getEventById = async () => {
-        const { data } = await eventServices.getEventById(`${dataOrder.event}`)
+        const { data } = await eventServices.getEventById(`${dataOrder.events}`)
         return data.data
     }
 
     const { data: dataEvent } = useQuery({
-        queryKey: ["Events"],
+        queryKey: ["events"],
         queryFn: getEventById,
-        enabled: !!dataOrder?.event
+        enabled: !!dataOrder?.events
     })
 
     const getTicketById = async () => {

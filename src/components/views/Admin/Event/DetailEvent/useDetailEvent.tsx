@@ -32,7 +32,7 @@ const useDetailEvent = () => {
     })
 
     const getEventById = async () => {
-        const { data } = await eventServices.getEventsById(`${query.id}`)
+        const { data } = await eventServices.getEventById(`${query.id}`)
         return data.data
     }
 
