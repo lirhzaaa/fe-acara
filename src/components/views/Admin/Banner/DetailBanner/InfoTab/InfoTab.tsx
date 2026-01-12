@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardHeader, Input, Select, SelectItem, Skeleton, Spinner, Textarea } from "@heroui/react"
+import { Button, Card, CardBody, CardHeader, Input, Select, SelectItem, Skeleton, Spinner } from "@heroui/react"
 import { IBanner } from "@/types/Banner"
 import useInfoTab from "./useInfoTab"
 import { Controller } from "react-hook-form"
@@ -6,7 +6,7 @@ import { useEffect } from "react"
 
 interface IInfoTypes {
     dataBanner: IBanner
-    onUpdate: (data: IBanner) => void
+    onUpdate: (data: Partial<IBanner>) => void
     isPendingUpdateBanner: boolean
     isSuccessUpdateBanner: boolean
 }

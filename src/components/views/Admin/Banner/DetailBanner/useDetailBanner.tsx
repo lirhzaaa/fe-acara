@@ -12,7 +12,7 @@ const useDetailBanner = () => {
         isPending: isPendingMutateUpdateBanner,
         isSuccess: isSuccessMutateUpdateBanner
     } = useMutation({
-        mutationFn: (payload: IBanner) => updateBanner(payload),
+        mutationFn: (payload: Partial<IBanner>) => updateBanner(payload),
         onError: (error) => {
             addToast({
                 title: "Error",
@@ -41,12 +41,12 @@ const useDetailBanner = () => {
         enabled: isReady
     })
 
-    const updateBanner = async (payload: IBanner) => {
+    const updateBanner = async (payload: Partial<IBanner>) => {
         const { data } = await bannerServices.updateBanners(`${query.id}`, payload)
         return data.data
     }
 
-    const handleUpdateBanner = (data: IBanner) => mutateUpdateBanner(data)
+    const handleUpdateBanner = (data: Partial<IBanner>) => mutateUpdateBanner(data as IBanner)
 
     return {
         dataBanner,
