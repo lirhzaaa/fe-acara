@@ -47,7 +47,7 @@ const Transaction = () => {
                         <DropdownAction
                             textButtonDetail="Detail Transaction"
                             textButtonDelete="Delete Transaction"
-                            onPressButtonDetail={() => push(`/member/transaction/${transaction.orderId}`)}
+                            onPressButtonDetail={() => push(`/admin/transaction/${transaction.orderId}`)}
                             onPressButtonDelete={() => {
                                 setSelectedId(`${transaction.orderId}`);
                                 deleteTransaction.onOpen()

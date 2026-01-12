@@ -13,13 +13,9 @@ const DetailTransaction = () => {
         dataEvent,
         dataTicket
     } = useDetailTransaction()
-    console.log("order", dataOrder)
-    console.log("ticket", dataTicket)
-    console.log("event", dataEvent)
     return (
         <Card className="px-5 py-4">
             <CardBody className="gap-8">
-                <Script src={environment.MIDTRANS_SNAP_URL} data-client-key={environment.MIDTRANS_CLIENT_KEY} strategy="lazyOnload" />
                 <div className="flex flex-col gap-2">
                     <h4 className="font-bold">Order:</h4>
                     <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
@@ -86,14 +82,6 @@ const DetailTransaction = () => {
                             ))}
                         </div>
                     </div>
-                )}
-                {dataOrder?.status === "pending" && (
-                    <Button
-                        color="danger"
-                        className="w-fit"
-                        onPress={() => window.snap.pay(dataOrder?.payment?.token)}>
-                        Pay Now
-                    </Button>
                 )}
             </CardBody>
         </Card>
