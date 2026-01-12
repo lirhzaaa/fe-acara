@@ -70,7 +70,7 @@ const LandingPageLayoutNavbar = () => {
                                 <Avatar src={dataProfile?.profilePicture} className="cursor-pointer" showFallback />
                             </DropdownTrigger>
                             <DropdownMenu>
-                                <DropdownItem key="admin" href="/admin/dashboard" className={cn({
+                                <DropdownItem key="admin" href="/admin/" className={cn({
                                     hidden: dataProfile?.role !== "admin"
                                 })}>
                                     Admin
@@ -109,7 +109,7 @@ const LandingPageLayoutNavbar = () => {
                     {session.status === "authenticated" ? (
                         <Fragment>
                             <NavbarMenuItem>
-                                <Link href="/admin/dashboard" className={cn("font-medium text-default-700 hover:text-danger", {
+                                <Link href="/admin/" className={cn("font-medium text-default-700 hover:text-danger", {
                                     "hidden": dataProfile?.role !== "admin"
                                 })}>
                                     Admin
