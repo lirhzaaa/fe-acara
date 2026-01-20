@@ -62,8 +62,8 @@ const useLogin = () => {
     onSuccess: (result) => {
       if (!result) return;
       addToast({
-        title: "Login Success",
-        description: "Login Success Nihhh",
+        title: "Success",
+        description: "Login Success",
         color: "success",
       });
       router.push(callbackUrl);

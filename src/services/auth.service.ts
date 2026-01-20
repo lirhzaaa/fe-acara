@@ -7,7 +7,7 @@ const authServices = {
     instance.post(`${endpoint.AUTH}/register`, payload),
   activation: (payload: IActivation) => {
     return instance.post(`${endpoint.AUTH}/activation`, payload);
-  },
+  },  
   login: (payload: ILogin) => instance.post(`${endpoint.AUTH}/login`, payload),
   getProfileToken: (token: string) =>
     instance.get(`${endpoint.AUTH}/me`, {

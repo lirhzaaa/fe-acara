@@ -26,7 +26,7 @@ const CardEvent = (props: propTypes) => {
                         <h2 className="line-clamp-1 text-lg font-bold text-danger">
                             {event?.name}
                         </h2>
-                        <p className="mb-2 text-sm link-clamp-2">{event?.description}</p>
+                        <p className="mb-2 text-sm line-clamp-2">{event?.description?.slice(0, 100)}</p>
                         <p className="text-foreground-500 text-xs">
                             {converTime(`${event?.startDate}`)}
                         </p>

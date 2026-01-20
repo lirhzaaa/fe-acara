@@ -68,7 +68,7 @@ const DetailEvent = () => {
                 <Skeleton isLoaded={dataDetailEvent?.description} className="h-6">
                   <h2 className="text-xl font-semibold text-foreground-700">About Event</h2>
                 </Skeleton>
-                <Skeleton isLoaded={dataDetailEvent?.description} className="h-4">
+                <Skeleton isLoaded={dataDetailEvent?.description}>
                   <p className="text-foreground-500">{dataDetailEvent?.description}</p>
                 </Skeleton>
               </Tab>
