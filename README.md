@@ -1,40 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Acara Frontend Web Application
 
-## Getting Started
+Frontend application for **Acara – Integrated Event Ticketing Platform**. This web app provides the user interface for browsing events, purchasing tickets, and managing user accounts for both members and admins.
 
-First, run the development server:
+## 🔗 Links
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Live Website:** https://acaranya-kita.vercel.app/
+- **Backend API:** https://be-acara-sigma.vercel.app/
+- **API Documentation (Swagger):** https://be-acara-sigma.vercel.app/api-docs
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## 📌 Overview
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+The Acara frontend is built as a modern web application that consumes a separate backend API. It focuses on delivering a clean, responsive, and user-friendly experience for event discovery and ticket purchasing.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+The application supports both **member** and **admin** roles with protected routes and role-based access.
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## ✨ Main Features
 
-To learn more about Next.js, take a look at the following resources:
+### Public
+- Browse events by category
+- View event details
+- Support for online and offline events
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+### Member
+- User registration with email activation
+- Login & authentication
+- Purchase event tickets
+- Secure payment via Midtrans Snap
+- View transaction history
+- Update profile information
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Admin
+- Dashboard access
+- Manage events, categories, and banners
+- View transaction data
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🛠 Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+- Next.js
+- TypeScript
+- Tailwind CSS
+- HeroUI
+- Yup (Form Validation)
+- JWT-based Authentication
+
+---
+
+## 🎨 UI & UX
+
+- Responsive layout
+- Reusable component structure
+- Form validation with clear error handling
+- Optimized user flow for ticket purchase
+
+---
+
+## 📌 Notes
+
+- This frontend is fully separated from the backend service.
+- API communication is handled through protected endpoints.
+- Authentication state is managed securely for both admin and member roles.
+
+---
+
+## 👤 Author
+
+Developed by **Lirhza**
