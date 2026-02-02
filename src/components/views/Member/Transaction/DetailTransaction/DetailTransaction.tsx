@@ -13,9 +13,6 @@ const DetailTransaction = () => {
         dataEvent,
         dataTicket
     } = useDetailTransaction()
-    console.log("order", dataOrder)
-    console.log("ticket", dataTicket)
-    console.log("event", dataEvent)
     return (
         <Card className="px-5 py-4">
             <CardBody className="gap-8">

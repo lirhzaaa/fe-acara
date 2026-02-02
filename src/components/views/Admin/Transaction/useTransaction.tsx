@@ -27,7 +27,7 @@ const useTransactions = () => {
         enabled: router.isReady && !!currentPage && !!currentLimit,
     });
 
-    console.log(dataTransactions)
+    // console.log(dataTransactions)
 
     return {
         dataTransactions,
