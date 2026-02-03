@@ -28,13 +28,13 @@ const SecurityTab = () => {
                             {...field}
                             label="Password"
                             labelPlacement="outside"
-                            type={isVisible.oldPassword ? "true" : "password"}
+                            type={isVisible.oldPassword ? "text" : "password"}
                             variant="bordered"
                             placeholder="Please input your password"
                             isInvalid={errorsUpdatePassword.oldPassword !== undefined}
                             errorMessage={errorsUpdatePassword.oldPassword?.message}
                             endContent={
-                                <button type="button" className="focus:outline-none" onClick={() => ("oldPassword")}>
+                                <button type="button" className="focus:outline-none" onClick={() => handleTogglePassword("oldPassword")}>
                                     {isVisible.oldPassword ? (
                                         <FaEye className="text-xl text-default-400 cursor-pointer" />
                                     ) : (
@@ -48,7 +48,7 @@ const SecurityTab = () => {
                             {...field}
                             label="New Password"
                             labelPlacement="outside"
-                            type={isVisible.password ? "true" : "password"}
+                            type={isVisible.password ? "text" : "password"}
                             variant="bordered"
                             placeholder="Please input your new password"
                             isInvalid={errorsUpdatePassword.password !== undefined}
@@ -68,7 +68,7 @@ const SecurityTab = () => {
                             {...field}
                             label="Confirm Password"
                             labelPlacement="outside"
-                            type={isVisible.confirmPassword ? "true" : "password"}
+                            type={isVisible.confirmPassword ? "text" : "password"}
                             variant="bordered"
                             placeholder="Please confirm password"
                             isInvalid={errorsUpdatePassword.confirmPassword !== undefined}

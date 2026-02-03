@@ -87,36 +87,36 @@ const useDetailEvent = () => {
                 color: "danger"
             })
         },
-onSuccess: (result) => {
-    if (result.payment?.token) {
-        const transactionToken = result.payment.token;
-        window.snap.pay(transactionToken, {
-            onSuccess: function(result) {
-                router.push(`/payment/success?order_id=${result.order_id}`)
-            },
-            onPending: function(result) {
-                router.push(`/payment/pending?order_id=${result.order_id}`)
-            },
-            onError: function(result) {
-                router.push(`/payment/error?order_id=${result.order_id}`)
-            },
-            onClose: function() {
-                addToast({
-                    title: "Cancelled",
-                    description: "Payment was cancelled.",
-                    color: "warning"
+        onSuccess: (result) => {
+            if (result.payment?.token) {
+                const transactionToken = result.payment.token;
+                window.snap.pay(transactionToken, {
+                    onSuccess: function (result) {
+                        router.push(`/payment/success?order_id=${result.order_id}`)
+                    },
+                    onPending: function (result) {
+                        router.push(`/payment/pending?order_id=${result.order_id}`)
+                    },
+                    onError: function (result) {
+                        router.push(`/payment/error?order_id=${result.order_id}`)
+                    },
+                    onClose: function () {
+                        addToast({
+                            title: "Cancelled",
+                            description: "Payment was cancelled.",
+                            color: "warning"
+                        })
+                    }
                 })
+            } else {
+                addToast({
+                    title: "Order Created",
+                    description: "Your order has been created successfully.",
+                    color: "success"
+                })
+                router.push('/member/transaction')
             }
-        })
-    } else {
-        addToast({
-            title: "Order Created",
-            description: "Your order has been created successfully.",
-            color: "success"
-        })
-        router.push('/member/transaction')
-    }
-}
+        }
     })
 
     return {
